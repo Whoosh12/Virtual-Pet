@@ -29,10 +29,11 @@ function getType(e){
             petImage.src = 'rabbitIMG.jpg'
     }
     const petConfirm = document.querySelector('#petConfirm');
-    petConfirm.textContent = petConfirm.textContent + ` and is a ${pet.petType}`; //make it so you can only select type once
+    petConfirm.textContent = petConfirm.textContent + ` and is a ${pet.petType}`;
+    console.log(pet); //make it so you can only select type once
 }
 
-function calcHappiness(){
+function meterCalc(){
     pet.happiness=(pet.dirtiness+pet.hunger+pet.sleep)/3;
     const happyMeter = document.querySelector("#happiness");
     const hungerMeter = document.querySelector("#hunger");
@@ -44,6 +45,13 @@ function calcHappiness(){
     dirtMeter.value = pet.dirtiness;
 }
 
+function meterUpdater(){
+    pet.hunger -= 1;
+    pet.dirtiness -= 1;
+    pet.sleep -= 1;
+    meterCalc();
+}
+
 function init(){
     const nameButton = document.querySelector('.submit');
     const petSelect = document.querySelector('.select');
@@ -51,7 +59,8 @@ function init(){
     console.log(nameButton);
     nameButton.addEventListener('click', getName);
     petSelect.addEventListener('change', getType);
-    calcHappiness();
+    meterCalc();
+    setInterval(meterUpdater, 1000);
 }
 
 window.addEventListener('load', init);
