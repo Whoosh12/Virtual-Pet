@@ -1,0 +1,14 @@
+svg {
+    border: dashed red 0.1em;
+}
+
+#catHead {
+    animation: tiltingHead 5s infinite;
+}
+
+@keyframes tiltingHead {
+    0% { transform: rotate(0); }
+    5% { transform: rotate(45deg); transform-origin: center 75px; }
+    10% { transform: rotate(0); }
+    100% { transform: rotate(0); }
+}
