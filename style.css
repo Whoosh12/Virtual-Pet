@@ -3,12 +3,12 @@ svg {
 }
 
 #catHead {
-    animation: tiltingHead 5s infinite;
+    animation: tiltingHead 10s infinite;
 }
 
 @keyframes tiltingHead {
-    0% { transform: rotate(0); }
-    5% { transform: rotate(45deg); transform-origin: center 75px; }
-    10% { transform: rotate(0); }
-    100% { transform: rotate(0); }
+    0% { transform: rotate(0); transform-origin: 100px 75px }
+    8% { transform: rotate(45deg); transform-origin: 100px 75px;}
+    14% { transform: rotate(0);  transform-origin: 100px 75px}
+    100% { transform: rotate(0);  transform-origin: 100px 75px}
 }
