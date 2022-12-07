@@ -46,10 +46,36 @@ function meterCalc(){
 }
 
 function meterUpdater(){
-    pet.hunger -= 1;
-    pet.dirtiness -= 1;
-    pet.sleep -= 1;
+    if(pet.hunger > 0){
+        pet.hunger -= 1;
+    }
+    if(pet.dirtiness > 0){
+        pet.dirtiness -= 1;
+    }
+    if(pet.sleep > 0){
+        pet.sleep -= 1;
+    }
     meterCalc();
+    console.log(pet.hunger);
+}
+
+function feedPet(){
+    if(pet.hunger > 75){
+        pet.hunger += 100 - pet.hunger;
+    }
+    else{
+        pet.hunger += 25;
+    }
+}
+
+function cleanPet(){
+    if(pet.dirtiness > 98){
+        pet.dirtiness += 100 - pet.dirtiness;
+    }
+    else{
+        pet.dirtiness += 2;
+        console.log(pet.dirtiness);
+    }
 }
 
 function init(){
@@ -61,6 +87,10 @@ function init(){
     petSelect.addEventListener('change', getType);
     meterCalc();
     setInterval(meterUpdater, 1000);
+    const feedButton=document.querySelector('#feed');
+    feedButton.addEventListener('click', feedPet);
+    const cat = document.querySelector('#catSVG');
+    cat.addEventListener('mousemove', cleanPet);
 }
 
 window.addEventListener('load', init);
