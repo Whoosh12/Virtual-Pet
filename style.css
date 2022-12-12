@@ -12,3 +12,7 @@ svg {
     14% { transform: rotate(0);  transform-origin: 100px 75px}
     100% { transform: rotate(0);  transform-origin: 100px 75px}
 }
+
+.warning{
+    color: red;
+}

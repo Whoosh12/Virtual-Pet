@@ -4,33 +4,45 @@ const pet={
     hunger: 33,
     dirtiness: 33,
     sleep: 33,
-    happiness: 50
+    happiness: 33
 }
 
-function getName(){
+function getPet(){
     const nameInput = document.querySelector('.name');
-    pet.petName = nameInput.value;
     const petConfirm = document.querySelector('#petConfirm');
-    petConfirm.textContent = `Your pet is called ${pet.petName}`; //make it so you can only select you name once
-}
-
-function getType(e){
-    pet.petType = e.target.value;
-    console.log(pet.petType);
-    if(pet.petType.value == 'cat'){
-            const petImage = document.createElement('img')
-            petImage.src = 'catIMG.jpg' 
+    const petSelector = document.querySelector('.select');
+    const nameButton = document.querySelector('.submit');
+    const warning = document.createElement('h1');
+    if(nameInput.value=='' && petSelector.value=='')
+    {
+        warning.textContent = 'You have not inputted a name or selected a type.';
+        warning.classList.add('warning');
+        document.querySelector('#petCreate').append(warning);
     }
-    else if(pet.petType.value == 'dog'){
-            const petImage = document.createElement('img')
-            petImage.src = '.dogIMG.jpg'}
-    else if(pet.petType.value == 'rabbit'){
-            const petImage = document.createElement('img')
-            petImage.src = 'rabbitIMG.jpg'
+    else if(nameInput.value=='')
+    {
+        warning.textContent = 'You have not inputted a name.';
+        warning.classList.add('warning');
+        document.querySelector('#petCreate').append(warning);
     }
-    const petConfirm = document.querySelector('#petConfirm');
-    petConfirm.textContent = petConfirm.textContent + ` and is a ${pet.petType}`;
-    console.log(pet); //make it so you can only select type once
+    else if(petSelector.value=='')
+    {
+        warning.textContent = 'You have not selected a type.'
+        warning.classList.add('warning');
+        document.querySelector('#petCreate').append(warning);
+    }
+    else{
+        if(document.querySelector('.warning')){
+            document.querySelector('.warning').remove();
+        }
+        document.querySelector('#inputLabel').remove();     
+        pet.petType = petSelector.value;
+        pet.petName = nameInput.value;
+        document.querySelector('.select').style.display = 'none';
+        nameButton.style.display = 'none';
+        nameInput.style.display = 'none';
+        petConfirm.textContent = `Your ${pet.petType} is called ${pet.petName}.`; 
+    }
 }
 
 function meterCalc(){
@@ -56,7 +68,6 @@ function meterUpdater(){
         pet.sleep -= 1;
     }
     meterCalc();
-    console.log(pet.hunger);
 }
 
 function feedPet(){
@@ -74,23 +85,19 @@ function cleanPet(){
     }
     else{
         pet.dirtiness += 2;
-        console.log(pet.dirtiness);
     }
 }
 
 function init(){
     const nameButton = document.querySelector('.submit');
     const petSelect = document.querySelector('.select');
-    let petType;
-    console.log(nameButton);
-    nameButton.addEventListener('click', getName);
-    petSelect.addEventListener('change', getType);
+    nameButton.addEventListener('click', getPet);
     meterCalc();
     setInterval(meterUpdater, 1000);
     const feedButton=document.querySelector('#feed');
     feedButton.addEventListener('click', feedPet);
     const cat = document.querySelector('#catSVG');
-    cat.addEventListener('mousemove', cleanPet);
+    cat.addEventListener('mouseover', cleanPet);
 }
 
 window.addEventListener('load', init);
