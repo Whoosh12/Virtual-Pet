@@ -15,4 +15,9 @@ svg {
 
 .warning{
     color: red;
+    font-size: large;
+}
+
+.hidden{
+    display: none;
 }

@@ -7,30 +7,29 @@ const pet={
     happiness: 33
 }
 
+
 function getPet(){ //create an el to put all query selectors in on load loop over query selector all [id]
     const nameInput = document.querySelector('.name');
     const petConfirm = document.querySelector('#petConfirm');
     const petSelector = document.querySelector('.select');
     const nameButton = document.querySelector('.submit');
-    const warning = document.createElement('h1');
-    warning.classList.add('warning');
-    document.querySelector('#petCreate').append(warning);
+    const petHide = document.querySelector('.hidden');
     if(nameInput.value=='' && petSelector.value=='')
     {
-        warning.textContent = 'You have not inputted a name or selected a type.';
+        petConfirm.textContent = 'You have not inputted a name or selected a type!';
+        petConfirm.classList.toggle('warning');
     }
     else if(nameInput.value=='')
     {
-        warning.textContent = 'You have not inputted a name.';
+        petConfirm.textContent = 'You have not inputted a name!';
+        petConfirm.classList.toggle('warning');
     }
     else if(petSelector.value=='')
     {
-        warning.textContent = 'You have not selected a type.'
+        petConfirm.textContent = 'You have not selected a type!'
+        petConfirm.classList.toggle('warning');
     }
     else{
-        if(document.querySelector('.warning')){
-            document.querySelector('.warning').remove();
-        }
         document.querySelector('#inputLabel').remove();     
         pet.petType = petSelector.value;
         pet.petName = nameInput.value;
@@ -38,7 +37,19 @@ function getPet(){ //create an el to put all query selectors in on load loop ove
         nameButton.style.display = 'none'; //put in css using class toggles
         nameInput.style.display = 'none';
         petConfirm.textContent = `Your ${pet.petType} is called ${pet.petName}.`; 
+        petHide.classList.toggle('hidden');
+        setInterval(meterUpdater, 1000);
+        // fetch('cat.svg').then(response => response.text).then(svg => document.body.insertAdjacentHTML('afterbegin', svg));
     }
+}
+
+async function petSVG(){
+    const response = await fetch('cat.svg');
+    const cat = await response.json();
+    const svg = document.createElement('svg');
+    const pet = document.querySelector('#pet');
+    svg.append(pet);
+    console.log('appended');
 }
 
 function meterCalc(){
@@ -55,9 +66,9 @@ function meterCalc(){
 
 function meterUpdater(){
     pet.hunger = Math.max(pet.hunger -= 1, 0);
-    pet. dirtiness = Math.max(pet.dirtiness -= 1, 0);
-    pet.sleep = Math.max(pet.sleep -= 1, 0);
-    meterCalc();
+        pet. dirtiness = Math.max(pet.dirtiness -= 1, 0);
+        pet.sleep = Math.max(pet.sleep -= 1, 0);
+        meterCalc();
 }
 
 function feedPet(){
@@ -73,7 +84,6 @@ function init(){
     const petSelect = document.querySelector('.select');
     nameButton.addEventListener('click', getPet);
     meterCalc();
-    setInterval(meterUpdater, 1000);
     const feedButton=document.querySelector('#feed');
     feedButton.addEventListener('click', feedPet);
     const cat = document.querySelector('#catSVG');
