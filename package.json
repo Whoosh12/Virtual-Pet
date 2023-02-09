@@ -1,4 +1,8 @@
 {
+
+  "scripts": {
+    "start": "node svr.mjs"
+  },
   "dependencies": {
     "express": "^4.18.2"
   }

@@ -38,15 +38,17 @@ function getPet(){ //create an el to put all query selectors in on load loop ove
         nameInput.style.display = 'none';
         petConfirm.textContent = `Your ${pet.petType} is called ${pet.petName}.`; 
         petHide.classList.toggle('hidden');
+        petSVG();
         setInterval(meterUpdater, 1000);
-        // fetch('cat.svg').then(response => response.text).then(svg => document.body.insertAdjacentHTML('afterbegin', svg));
     }
 }
 
 async function petSVG(){
     const response = await fetch('cat.svg');
     const cat = await response.json();
-    const svg = document.createElement('svg');
+    const svg = document.createElement('object');
+    svg.type = 'image/svg';
+    svg.data = cat;
     const pet = document.querySelector('#pet');
     svg.append(pet);
     console.log('appended');
