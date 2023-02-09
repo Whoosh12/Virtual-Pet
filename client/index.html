@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<title>Virtual Pet</title>
+<link rel="stylesheet" href="style.css">
+<script defer src = index.js></script>
+<head>
+
+</head>
+
+<body>
+    <section id = 'petCreate'>
+        <label id = inputLabel>Please input a name for your pet:</label>
+        <input type="text" class = 'name'>
+        <button class = 'submit' type = 'button'>Submit</button> 
+    
+        <br>
+        <select class = 'select'>
+            <option value = ''>Please select a pet type</option>
+            <option value = 'cat'>Cat</option>
+            <option value = 'dog'>Dog</option>
+            <option value = 'rabbit'>Rabbit</option>
+
+        </select>
+        <p id = 'petConfirm'>You have not selected a name or type for your pet</p>
+    </section>
+
+    <section id = "pet" class="hidden">
+        <svg width = '200' height = '200' id="catSVG">
+            <defs>
+                <g id="cat">
+                    <use href="#catBody"></use>
+                    <use href="#catLegs"></use>
+                    <use href="#catHead"></use>
+                </g>
+                <g id="catHead">
+                    <polygon points="75,60 75,30 105,60"></polygon>
+                    <polygon points="95,60 125,30 125,60"></polygon>
+                    <circle cx="100" cy="75" r="30" stroke="black" stroke-width="3" fill="grey"></circle>
+                    <circle cx="90" cy="65" r="3"></circle>
+                    <circle cx="110" cy="65" r="3"></circle>
+                    <path d="M100,80 c0,0 -5,10 -15,5" fill="none" stroke="black"></path>
+                    <path d="M100,80 c0,0 5,10 15,5" fill="none" stroke="black"></path>
+                    <polygon points="100,80 95,75 105,75"></polygon>
+                </g>
+                <g id="catBody">
+                    <polygon points="85,90 75,160 125,160 115,90" fill="grey" stroke="black" stroke-width="3"></polygon>
+                </g>
+                <g id="catLegs">
+                    <path d="M85,90 L85,150 C85,150 70,160 85,160 L95,160 95,90 z" fill="grey" stroke="black"></path>
+                    <path d="M115,90 L115,150 C115,150 130,160 115,160 L105,160 105,90 z" fill="grey" stroke="black"></path>
+                </g>
+            </defs>
+            <use href="#cat"></use>
+        </svg>
+    
+        <label for="happiness">Happiness</label>
+        <meter id="happiness" min="0" max="100" low="33" high="66" optimum="80" value="50"></meter>
+        <label for="hunger">Hunger</label>
+        <meter id="hunger" min="0" max="100" low="33" high="66" optimum="80" value="50"></meter>
+        <label for="energy">Energy</label>
+        <meter id="energy" min="0" max="100" low="33" high="66" optimum="80" value="50"></meter>
+        <label for="dirtiness">Dirtiness</label>
+        <meter id="dirtiness" min="0" max="100" low="33" high="66" optimum="80" value="50"></meter>
+    
+        <button id="feed" type="button">Feed!</button>
+    </section>
+
+    <button type="button" id="clear">Clear</button>
+</body>
