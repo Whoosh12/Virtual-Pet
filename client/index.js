@@ -1,3 +1,5 @@
+//Change the pet creation to recognize storage, add way to replenish energy, change layout, make more svgs
+
 const pet={
     petName: '',
     petType: '',
@@ -40,18 +42,8 @@ function getPet(){ //create an el to put all query selectors in on load loop ove
         petHide.classList.toggle('hidden');
         petSVG();
         setInterval(meterUpdater, 1000);
+        // meterUpdater();
     }
-}
-
-async function petSVG(){
-    const response = await fetch('cat.svg');
-    const cat = await response.json();
-    const svg = document.createElement('object');
-    svg.type = 'image/svg';
-    svg.data = cat;
-    const pet = document.querySelector('#pet');
-    svg.append(pet);
-    console.log('appended');
 }
 
 function meterCalc(){
@@ -70,6 +62,7 @@ function meterUpdater(){
     pet.hunger = Math.max(pet.hunger -= 1, 0);
         pet. dirtiness = Math.max(pet.dirtiness -= 1, 0);
         pet.sleep = Math.max(pet.sleep -= 1, 0);
+        localStorage.setItem('Pet', JSON.stringify(pet));
         meterCalc();
 }
 
@@ -81,6 +74,24 @@ function cleanPet(){
     pet.dirtiness = Math.min(pet.dirtiness += 2, 100);
 }
 
+function petSaveCheck(){
+    if(!localStorage.getItem("Pet")){
+        localStorage.setItem("Pet", JSON.stringify(pet));
+    }
+    else{
+        //const storedPet = localStorage.getItem("Pet");
+        const storedPet = JSON.parse(localStorage.getItem("Pet"));
+        pet.hunger = storedPet.hunger;
+        pet.sleep = storedPet.sleep;
+        pet.dirtiness = storedPet.dirtiness;
+        pet.happiness = storedPet.happiness;
+    }
+}
+
+function clearStorage(){
+    localStorage.clear();
+}
+
 function init(){
     const nameButton = document.querySelector('.submit');
     const petSelect = document.querySelector('.select');
@@ -90,6 +101,9 @@ function init(){
     feedButton.addEventListener('click', feedPet);
     const cat = document.querySelector('#catSVG');
     cat.addEventListener('mouseover', cleanPet);
+    const clearButton = document.querySelector('#clear');
+    clearButton.addEventListener('click', clearStorage);
+    petSaveCheck();
 }
 
 window.addEventListener('load', init);
