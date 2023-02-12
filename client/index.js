@@ -6,7 +6,8 @@ const pet={
     hunger: 33,
     dirtiness: 33,
     sleep: 33,
-    happiness: 33
+    happiness: 33,
+    saved: false
 }
 
 
@@ -40,7 +41,6 @@ function getPet(){ //create an el to put all query selectors in on load loop ove
         nameInput.style.display = 'none';
         petConfirm.textContent = `Your ${pet.petType} is called ${pet.petName}.`; 
         petHide.classList.toggle('hidden');
-        petSVG();
         setInterval(meterUpdater, 1000);
         // meterUpdater();
     }
@@ -81,6 +81,8 @@ function petSaveCheck(){
     else{
         //const storedPet = localStorage.getItem("Pet");
         const storedPet = JSON.parse(localStorage.getItem("Pet"));
+        pet.petName = storedPet.petName;
+        pet.petType = storedPet.petType;
         pet.hunger = storedPet.hunger;
         pet.sleep = storedPet.sleep;
         pet.dirtiness = storedPet.dirtiness;

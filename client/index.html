@@ -3,7 +3,6 @@
 <title>Virtual Pet</title>
 <link rel="stylesheet" href="style.css">
 <script defer src = index.js></script>
->>>>>>> 1d230b0e6decad87d7c29972d5938a2a68194250
 <head>
 
 </head>
@@ -65,6 +64,73 @@
         <meter id="dirtiness" min="0" max="100" low="33" high="66" optimum="80" value="50"></meter>
     
         <button id="feed" type="button">Feed!</button>
+    </section>
+
+    <section>
+        <svg width = '200' height = '200' id="dogSVG">
+            <defs>
+                <g id="dog">
+                    <use href="#dogTail"></use>
+                    <use href="#dogBody"></use>
+                    <use href="#dogLegs"></use>
+                    <use href="#dogHead"></use>
+                </g>
+                <g id="dogHead">
+                    <polygon points="75,60 75,40 90,40 105,60"></polygon>
+                    <path d="M75,40 c0,0 0,-20 15,0"></path>
+                    <polygon points="95,60 110,40 125,40 125,60"></polygon>
+                    <path d="M110,40 c0,0 15,-20 15,0"></path>
+                    <circle cx="100" cy="75" r="30" stroke="black" stroke-width="3" fill="gold"></circle>
+                    <circle cx="90" cy="65" r="3"></circle>
+                    <circle cx="110" cy="65" r="3"></circle>
+                    <path d="M100,80 c0,0 -5,10 -10,5" fill="none" stroke="black"></path>
+                    <path d="M100,80 c0,0 5,10 10,5" fill="none" stroke="black"></path>
+                    <polygon points="100,80 95,75 105,75"></polygon>
+                </g>
+                <g id="dogTail">
+                    <path d="M80,145 c0,0 -30,-20 -25,-60 M55,85 c0,0 15,40 25,45 M80,125 L80,145 z" fill="gold" stroke="black"></path>
+                </g>
+                <g id="dogBody">
+                    <polygon points="85,90 75,160 125,160 115,90" fill="gold" stroke="black" stroke-width="3"></polygon>
+                </g>
+                <g id="dogLegs">
+                    <path d="M85,90 L85,150 C85,150 70,160 85,160 L95,160 95,90 z" fill="gold" stroke="black"></path>
+                    <path d="M115,90 L115,150 C115,150 130,160 115,160 L105,160 105,90 z" fill="gold" stroke="black"></path>
+                </g>
+            </defs>
+            <use href="#dog"></use>
+        </svg>
+
+        <svg width = '200' height = '200' id="rabbitSVG">
+            <defs>
+                <g id="rabbit">
+                    <use href="#rabbitBody"></use>
+                    <use href="#rabbitLegs"></use>
+                    <use href="#rabbitEars"></use>
+                    <use href="#rabbitHead"></use>
+                </g>
+                <g id="rabbitHead">
+                    <circle cx="100" cy="75" r="30" stroke="black" stroke-width="3" fill="grey"></circle>
+                    <circle cx="90" cy="65" r="3"></circle>
+                    <circle cx="110" cy="65" r="3"></circle>
+                    <path d="M100,80 c0,0 -5,10 -15,5" fill="none" stroke="black"></path>
+                    <path d="M100,80 c0,0 5,10 15,5" fill="none" stroke="black"></path>
+                    <polygon points="100,80 95,75 105,75"></polygon>
+                </g>
+                <g id="rabbitEars">
+                    <path d="M80,60 c0,0 -5,-50 5,-55 c0,0 8,5 5,55" fill="grey" stroke="black"></path>
+                    <path d="M110,60 c0,0 -5,-50 5,-55 c0,0 8,5 5,55" fill="grey" stroke="black"></path>
+                </g>
+                <g id="rabbitBody">
+                    <polygon points="85,90 75,160 125,160 115,90" fill="grey" stroke="black" stroke-width="3"></polygon>
+                </g>
+                <g id="rabbitLegs">
+                    <path d="M85,90 L85,150 C85,150 70,160 85,160 L95,160 95,90 z" fill="grey" stroke="black"></path>
+                    <path d="M115,90 L115,150 C115,150 130,160 115,160 L105,160 105,90 z" fill="grey" stroke="black"></path>
+                </g>
+            </defs>
+            <use href="#rabbit"></use>
+        </svg>
     </section>
 
     <button type="button" id="clear">Clear</button>
