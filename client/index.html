@@ -21,11 +21,12 @@
             <option value = 'rabbit'>Rabbit</option>
 
         </select>
-        <p id = 'petConfirm'>You have not selected a name or type for your pet</p>
     </section>
 
-    <section id = "pet" class="hidden">
-        <svg width = '200' height = '200' id="catSVG">
+    <p id = 'petConfirm'>You have not selected a name or type for your pet</p>
+
+    <section id="svg">
+        <svg width = '200' height = '200' id="catSVG" class="hidden">
             <defs>
                 <g id="cat">
                     <use href="#catBody"></use>
@@ -53,27 +54,14 @@
             <use href="#cat"></use>
         </svg>
 
-    
-        <label for="happiness">Happiness</label>
-        <meter id="happiness" min="0" max="100" low="33" high="66" optimum="80" value="50"></meter>
-        <label for="hunger">Hunger</label>
-        <meter id="hunger" min="0" max="100" low="33" high="66" optimum="80" value="50"></meter>
-        <label for="energy">Energy</label>
-        <meter id="energy" min="0" max="100" low="33" high="66" optimum="80" value="50"></meter>
-        <label for="dirtiness">Dirtiness</label>
-        <meter id="dirtiness" min="0" max="100" low="33" high="66" optimum="80" value="50"></meter>
-    
-        <button id="feed" type="button">Feed!</button>
-    </section>
-
-    <section>
-        <svg width = '200' height = '200' id="dogSVG">
+        <svg width = '200' height = '200' id="dogSVG" class="hidden">
             <defs>
                 <g id="dog">
                     <use href="#dogTail"></use>
                     <use href="#dogBody"></use>
                     <use href="#dogLegs"></use>
                     <use href="#dogHead"></use>
+                    <use href="#dogTongue"></use>
                 </g>
                 <g id="dogHead">
                     <polygon points="75,60 75,40 90,40 105,60"></polygon>
@@ -83,12 +71,16 @@
                     <circle cx="100" cy="75" r="30" stroke="black" stroke-width="3" fill="gold"></circle>
                     <circle cx="90" cy="65" r="3"></circle>
                     <circle cx="110" cy="65" r="3"></circle>
-                    <path d="M100,80 c0,0 -5,10 -10,5" fill="none" stroke="black"></path>
-                    <path d="M100,80 c0,0 5,10 10,5" fill="none" stroke="black"></path>
+                    <path d="M100,80 l-10,10" fill="none" stroke="black"></path>
+                    <path d="M100,80 l10,10" fill="none" stroke="black"></path>
+                    <path d="M100,80 l7,7 c0,0 -6.5,10 -14,0 z"></path>
                     <polygon points="100,80 95,75 105,75"></polygon>
                 </g>
                 <g id="dogTail">
-                    <path d="M80,145 c0,0 -30,-20 -25,-60 M55,85 c0,0 15,40 25,45 M80,125 L80,145 z" fill="gold" stroke="black"></path>
+                    <path d="M80,145 c0,0 -30,-20 -25,-60 c0,0 15,40 25,45 M80,125 L80,145 z" fill="gold" stroke="black"></path>
+                </g>
+                <g id="dogTongue">
+                    <path d="M95,86 l0,10 c0,0 5,5 10,0 l0,-10 c0,0 -5,-3 -10,0" fill="pink" stroke="black"></path>
                 </g>
                 <g id="dogBody">
                     <polygon points="85,90 75,160 125,160 115,90" fill="gold" stroke="black" stroke-width="3"></polygon>
@@ -101,7 +93,7 @@
             <use href="#dog"></use>
         </svg>
 
-        <svg width = '200' height = '200' id="rabbitSVG">
+        <svg width = '200' height = '200' id="rabbitSVG" class="hidden">
             <defs>
                 <g id="rabbit">
                     <use href="#rabbitBody"></use>
@@ -113,8 +105,8 @@
                     <circle cx="100" cy="75" r="30" stroke="black" stroke-width="3" fill="grey"></circle>
                     <circle cx="90" cy="65" r="3"></circle>
                     <circle cx="110" cy="65" r="3"></circle>
-                    <path d="M100,80 c0,0 -5,10 -15,5" fill="none" stroke="black"></path>
-                    <path d="M100,80 c0,0 5,10 15,5" fill="none" stroke="black"></path>
+                    <path d="M100,80 c0,0 -5,10 -8,0" fill="none" stroke="black"></path>
+                    <path d="M100,80 c0,0 5,10 8,0" fill="none" stroke="black"></path>
                     <polygon points="100,80 95,75 105,75"></polygon>
                 </g>
                 <g id="rabbitEars">
@@ -132,6 +124,19 @@
             </defs>
             <use href="#rabbit"></use>
         </svg>
+    </section>
+
+    <section id = "petStats" class="hidden">
+        <label for="happiness">Happiness</label>
+        <meter id="happiness" min="0" max="100" low="33" high="66" optimum="80" value="50"></meter>
+        <label for="hunger">Hunger</label>
+        <meter id="hunger" min="0" max="100" low="33" high="66" optimum="80" value="50"></meter>
+        <label for="energy">Energy</label>
+        <meter id="energy" min="0" max="100" low="33" high="66" optimum="80" value="50"></meter>
+        <label for="dirtiness">Dirtiness</label>
+        <meter id="dirtiness" min="0" max="100" low="80" optimum="33" high="66" value="50"></meter>
+    
+        <button id="feed" type="button">Feed!</button>
     </section>
 
     <button type="button" id="clear">Clear</button>

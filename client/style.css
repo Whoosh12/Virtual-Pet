@@ -8,8 +8,9 @@ svg {
 
 @keyframes tiltingHead {
     0% { transform: rotate(0); transform-origin: 100px 75px }
-    8% { transform: rotate(45deg); transform-origin: 100px 75px;}
-    14% { transform: rotate(0);  transform-origin: 100px 75px}
+    67% { transform: rotate(0); transform-origin: 100px 75px }
+    75% { transform: rotate(45deg); transform-origin: 100px 75px;}
+    81% { transform: rotate(0);  transform-origin: 100px 75px}
     100% { transform: rotate(0);  transform-origin: 100px 75px}
 }
 
