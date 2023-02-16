@@ -11,16 +11,17 @@
     <section id = 'petCreate'>
         <label id = inputLabel>Please input a name for your pet:</label>
         <input type="text" class = 'name'>
-        <button class = 'submit' type = 'button'>Submit</button> 
     
         <br>
-        <select class = 'select'>
+        <select class = 'select' id="typeSelect">
             <option value = ''>Please select a pet type</option>
             <option value = 'cat'>Cat</option>
             <option value = 'dog'>Dog</option>
             <option value = 'rabbit'>Rabbit</option>
 
         </select>
+
+        <button class = 'submit' type = 'button'>Submit</button> 
     </section>
 
     <p id = 'petConfirm'>You have not selected a name or type for your pet</p>
@@ -135,6 +136,8 @@
         <meter id="energy" min="0" max="100" low="33" high="66" optimum="80" value="50"></meter>
         <label for="dirtiness">Dirtiness</label>
         <meter id="dirtiness" min="0" max="100" low="80" optimum="33" high="66" value="50"></meter>
+        <label for="health">Health</label>
+        <meter id="health" min="0" max="100" low="33" high="66" optimum="80" value="50"></meter>
     
         <button id="feed" type="button">Feed!</button>
     </section>
