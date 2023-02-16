@@ -9,9 +9,45 @@ svg {
 @keyframes tiltingHead {
     0% { transform: rotate(0); transform-origin: 100px 75px }
     67% { transform: rotate(0); transform-origin: 100px 75px }
-    75% { transform: rotate(45deg); transform-origin: 100px 75px;}
-    81% { transform: rotate(0);  transform-origin: 100px 75px}
-    100% { transform: rotate(0);  transform-origin: 100px 75px}
+    75% { transform: rotate(45deg); transform-origin: 100px 75px }
+    81% { transform: rotate(0);  transform-origin: 100px 75px }
+    100% { transform: rotate(0);  transform-origin: 100px 75px }
+}
+
+#dogTail {
+    animation: waggingTail 2s infinite;
+}
+
+@keyframes waggingTail {
+    0% { transform: rotate(0); transform-origin: 81px 150px }
+    25% { transform: rotate(-20deg); transform-origin: 81px 150px }
+    50% { transform: rotate(0); transform-origin: 81px 150px }
+    75% { transform: rotate(-20deg); transform-origin: 81px 150px }
+    100% { transform: rotate(0); transform-origin: 81px 150px }
+}
+
+#leftEar {
+    animation: tiltLeftEar 6s infinite;
+}
+
+@keyframes tiltLeftEar {
+    0% { transform: rotate(0); transform-origin: 85px 60px }
+    68% { transform: rotate(0); transform-origin: 85px 60px }
+    75% { transform: rotate(-20deg); transform-origin: 85px 60px }
+    82% { transform: rotate(0);  transform-origin: 85px 60px }
+    100% { transform: rotate(0);  transform-origin: 85px 60px }
+}
+
+#rightEar {
+    animation: tiltRightEar 6s infinite;
+}
+
+@keyframes tiltRightEar {
+    0% { transform: rotate(0); transform-origin: 115px 60px }
+    68% { transform: rotate(0); transform-origin: 115px 60px }
+    75% { transform: rotate(20deg); transform-origin: 115px 60px }
+    82% { transform: rotate(0);  transform-origin: 115px 60px }
+    100% { transform: rotate(0);  transform-origin: 115px 60px }
 }
 
 .warning{
@@ -21,6 +57,7 @@ svg {
 
 .hidden{
     display: none;
+    animation-play-state: paused;
 }
 
 #petCreate{

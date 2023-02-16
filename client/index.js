@@ -22,7 +22,6 @@ function createPet() { // create an el to put all query selectors in on load loo
   const nameInput = document.querySelector('.name');
   const petConfirm = document.querySelector('#petConfirm');
   const petSelector = document.querySelector('.select');
-  const petHide = document.querySelector('#petStats');
   if (nameInput.value === '' && petSelector.value === '') {
     petConfirm.textContent = 'You have not inputted a name or selected a type!';
     petConfirm.classList.toggle('warning');
@@ -36,22 +35,10 @@ function createPet() { // create an el to put all query selectors in on load loo
     if (petConfirm.classList.contains('warning')) {
       petConfirm.classList.toggle('warning');
     }
-    const stopInterval = function clearUpdate() {
-      clearInterval(updateInterval);
-    };
-    const clearButton = document.querySelector('#clear');
-    clearButton.addEventListener('click', stopInterval);
-    pet.petType = petSelector.value;
     pet.petName = nameInput.value;
-    document.querySelector('#petCreate').style.display = 'none';
-    petConfirm.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
-    petHide.classList.toggle('hidden');
-    const petSVG = document.querySelector(`#${pet.petType}SVG`);
-    petSVG.classList.toggle('hidden');
-    petSVG.addEventListener('mouseover', cleanPet);
+    pet.petType = petSelector.value;
     localStorage.setItem('Pet', JSON.stringify(pet));
-    const updateInterval = setInterval(meterCalc, 1000); // every 504 secs (14 hours)
-    setInterval(savePet, 10000); // every 150 secs
+    loadPet();
   }
 }
 
@@ -85,14 +72,16 @@ function allowedKey(key) {
 }
 
 function petDeath() {
-  const petSVG = document.querySelector(`#${pet.petType}SVG`);
-  petSVG.classList.toggle('dead');
+  // const aliveEyes = document.querySelectorAll('#aliveEyes');
+  // aliveEyes.classList.toggle('hidden');
+  // const deadEyes = document.querySelectorAll('#deadEyes');
+  // deadEyes.classList.toggle('hidden');
+  const petConfirm = document.querySelector('#petConfirm');
+  petConfirm.textContent = `Your ${pet.petType}, ${pet.petName}, has died.`;
+  pauseAnimations();
 }
 
 function meterCalc() {
-  pet.hunger = Math.max(pet.hunger -= 1, 0);
-  pet.dirtiness = Math.max(pet.dirtiness -= 1, 0);
-  pet.sleep = Math.max(pet.sleep -= 1, 0);
   for (const [key, value] of Object.entries(pet)) {
     if (value === 0 && allowedKey(key)) {
       pet.healthProblems = Math.min(pet.healthProblems += 1, 3);
@@ -103,39 +92,46 @@ function meterCalc() {
   if (pet.health === 0) {
     petDeath();
   }
+  if (pet.healthProblems === 0) {
+    pet.health += 1;
+  }
+  pet.hunger = Math.max(pet.hunger -= 1, 0);
+  pet.dirtiness = Math.max(pet.dirtiness -= 1, 0);
+  pet.sleep = Math.max(pet.sleep -= 1, 0);
   pet.health = Math.max(pet.health -= pet.healthProblems, 0);
   // localStorage.setItem('Pet', JSON.stringify(pet)); // make this less regular, every ~5 mins
   meterUpdater();
 }
 
 function meterUpdater() { // simplify, get rid of consts
+  document.querySelector('#happiness').value = pet.happiness;
+  document.querySelector('#hunger').value = pet.hunger;
+  document.querySelector('#energy').value = pet.sleep;
+  document.querySelector('#dirtiness').value = 100 - pet.dirtiness;
+  document.querySelector('#health').value = pet.health;
   pet.happiness = (pet.dirtiness + pet.hunger + pet.sleep) / 3;
-  const happyMeter = document.querySelector('#happiness'); // el class
-  const hungerMeter = document.querySelector('#hunger');
-  const energyMeter = document.querySelector('#energy');
-  const dirtMeter = document.querySelector('#dirtiness');
-  const healthMeter = document.querySelector('#health');
-  happyMeter.value = pet.happiness;
-  hungerMeter.value = pet.hunger;
-  energyMeter.value = pet.sleep;
-  dirtMeter.value = 100 - pet.dirtiness;
-  healthMeter.value = pet.health;
 }
 
 function loadPet() {
   const petConfirm = document.querySelector('#petConfirm');
+  petConfirm.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
+
   const petHide = document.querySelector('#petStats');
-  const clearButton = document.querySelector('#clear');
-  const petSVG = document.querySelector(`#${pet.petType}SVG`);
-  clearButton.addEventListener('click', clearUpdate);
-  petSVG.addEventListener('mouseover', cleanPet);
-  document.querySelector('#petCreate').style.display = 'none';
-  petConfirm.textContent = `Your ${pet.petType} is called ${pet.petName}`;
   petHide.classList.toggle('hidden');
+
+  const clearButton = document.querySelector('#clear');
+  clearButton.addEventListener('click', clearUpdate);
+
+  const petSVG = document.querySelector(`#${pet.petType}SVG`);
+  petSVG.addEventListener('mouseover', cleanPet);
   petSVG.classList.toggle('hidden');
+
+  document.querySelector('#petCreate').style.display = 'none';
   localStorage.setItem('Pet', JSON.stringify(pet));
+
   const updateInterval = setInterval(meterCalc, 1000); // every 504 secs (14 hours)
   setInterval(savePet, 10000); // every 150 secs
+
   function clearUpdate() {
     clearInterval(updateInterval);
   }
@@ -153,14 +149,10 @@ function cleanPet() {
 function petSaveCheck() {
   if (localStorage.getItem('Pet')) {
     const storedPet = JSON.parse(localStorage.getItem('Pet'));
-    pet.petName = storedPet.petName;
-    pet.petType = storedPet.petType;
-    pet.hunger = storedPet.hunger;
-    pet.sleep = storedPet.sleep;
-    pet.dirtiness = storedPet.dirtiness;
-    pet.happiness = storedPet.happiness;
-    pet.health = storedPet.health;
-    pet.healthProblems = storedPet.healthProblems;
+    for (const [key, value] of Object.entries(pet)) {
+      pet[key] = storedPet[key];
+    }
+
     loadPet();
   }
 }
@@ -174,16 +166,59 @@ function clearStorage() {
   localStorage.clear();
 }
 
+function resetStats() {
+  pet.hunger = 66;
+  pet.dirtiness = 66;
+  pet.sleep = 66;
+  pet.health = 100;
+  pet.healthProblems = 0;
+}
+
+function pauseAnimations() {
+  let count;
+  for (let i = 0; i < 2; i++) {
+    const animation = document.querySelector(`${checkAnimations()}`);
+    const running = animation.style.animationPlayState === 'running';
+    animation.style.animationPlayState = running ? 'paused' : 'running';
+    count += 1;
+  }
+  function checkAnimations() {
+    let animationTarget;
+    switch (pet.petType) {
+      case 'cat':
+        animationTarget = '#catHead';
+        break;
+
+      case 'dog':
+        animationTarget = '#dogTail';
+        break;
+
+      case 'rabbit':
+        if (count === 0) {
+          animationTarget = '#leftEar';
+        } else {
+          animationTarget = '#rightEar';
+        }
+        break;
+    }
+    return animationTarget;
+  }
+  count = 0;
+}
+
 function init() {
   const nameButton = document.querySelector('.submit');
-  // const petSelect = document.querySelector('.select');
   nameButton.addEventListener('click', createPet);
-  meterUpdater();
   const feedButton = document.querySelector('#feed');
   feedButton.addEventListener('click', feedPet);
   const clearButton = document.querySelector('#clear');
   clearButton.addEventListener('click', clearStorage);
+  const resetButton = document.querySelector('#reset');
+  resetButton.addEventListener('click', resetStats);
+  const pauseButton = document.querySelector('#pause');
+  pauseButton.addEventListener('click', pauseAnimations);
   petSaveCheck();
+  meterUpdater();
 }
 
 window.addEventListener('load', init);
