@@ -5,6 +5,10 @@
 // pet will die if a stat is too low/ high for too long (36 hours?)
 // fishing minigame
 // comment code
+// seperate js based on if it affects the client ro is just back end logic
+// create a readme
+// make the svgs a seperate file
+// put pet attributes on server, allow for multiple pets
 
 const pet = {
   petName: '',
@@ -12,14 +16,16 @@ const pet = {
   hunger: 66,
   dirtiness: 66,
   sleep: 66,
-  happiness: 33,
+  happiness: 66,
   health: 100,
   healthProblems: 0,
 };
 
+let updateInterval;
+
 
 function createPet() { // create an el to put all query selectors in on load loop over query selector all [id]
-  const nameInput = document.querySelector('.name');
+  const nameInput = document.querySelector('.name'); // make name and ID
   const petConfirm = document.querySelector('#petConfirm');
   const petSelector = document.querySelector('.select');
   if (nameInput.value === '' && petSelector.value === '') {
@@ -72,24 +78,27 @@ function allowedKey(key) {
 }
 
 function petDeath() {
-  // const aliveEyes = document.querySelectorAll('#aliveEyes');
-  // aliveEyes.classList.toggle('hidden');
-  // const deadEyes = document.querySelectorAll('#deadEyes');
-  // deadEyes.classList.toggle('hidden');
+  const aliveEyes = document.querySelector('#aliveEyes');
+  aliveEyes.classList.toggle('hidden');
+  const deadEyes = document.querySelector('#deadEyes');
+  deadEyes.classList.toggle('hidden');
   const petConfirm = document.querySelector('#petConfirm');
   petConfirm.textContent = `Your ${pet.petType}, ${pet.petName}, has died.`;
   pauseAnimations();
 }
 
-function meterCalc() {
+function meterCalc() { // nested if, allowed key at top
   for (const [key, value] of Object.entries(pet)) {
-    if (value === 0 && allowedKey(key)) {
-      pet.healthProblems = Math.min(pet.healthProblems += 1, 3);
-    } else if (value > 0 && allowedKey(key)) {
-      pet.healthProblems = Math.max(pet.healthProblems -= 1, 0);
+    if (allowedKey(key)) {
+      if (value === 0) {
+        pet.healthProblems = Math.min(pet.healthProblems += 1, 3);
+      } else {
+        pet.healthProblems = Math.max(pet.healthProblems -= 1, 0);
+      }
     }
   }
   if (pet.health === 0) {
+    clearInterval(updateInterval);
     petDeath();
   }
   if (pet.healthProblems === 0) {
@@ -129,12 +138,13 @@ function loadPet() {
   document.querySelector('#petCreate').style.display = 'none';
   localStorage.setItem('Pet', JSON.stringify(pet));
 
-  const updateInterval = setInterval(meterCalc, 1000); // every 504 secs (14 hours)
-  setInterval(savePet, 10000); // every 150 secs
+  updateInterval = setInterval(meterCalc, 1000); // every 504 secs (14 hours)
 
   function clearUpdate() {
     clearInterval(updateInterval);
   }
+
+  setInterval(savePet, 10000); // every 150 secs
 }
 
 
@@ -146,9 +156,16 @@ function cleanPet() {
   pet.dirtiness = Math.min(pet.dirtiness += 2, 100);
 }
 
+function petPlay() {
+  pet.sleep = Math.min(pet.sleep += 25, 100);
+}
+
 function petSaveCheck() {
   if (localStorage.getItem('Pet')) {
     const storedPet = JSON.parse(localStorage.getItem('Pet'));
+    // for (const k of Object.keys(pet)) {
+    //   pet.k = storedPet.k;
+    // }
     for (const [key, value] of Object.entries(pet)) {
       pet[key] = storedPet[key];
     }
@@ -162,7 +179,7 @@ function savePet() {
 }
 
 function clearStorage() {
-  clearInterval(createPet.updateInterval);
+  clearInterval(updateInterval);
   localStorage.clear();
 }
 
@@ -175,13 +192,7 @@ function resetStats() {
 }
 
 function pauseAnimations() {
-  let count;
-  for (let i = 0; i < 2; i++) {
-    const animation = document.querySelector(`${checkAnimations()}`);
-    const running = animation.style.animationPlayState === 'running';
-    animation.style.animationPlayState = running ? 'paused' : 'running';
-    count += 1;
-  }
+  let count = 0;
   function checkAnimations() {
     let animationTarget;
     switch (pet.petType) {
@@ -203,7 +214,18 @@ function pauseAnimations() {
     }
     return animationTarget;
   }
+  for (let i = 0; i < 2; i++) {
+    const animation = document.querySelector(`${checkAnimations()}`);
+    const running = animation.style.animationPlayState === 'running';
+    animation.style.animationPlayState = running ? 'paused' : 'running';
+    console.log(animation);
+    count += 1;
+  }
   count = 0;
+}
+
+function killPet() {
+  pet.health = 0;
 }
 
 function init() {
@@ -211,14 +233,20 @@ function init() {
   nameButton.addEventListener('click', createPet);
   const feedButton = document.querySelector('#feed');
   feedButton.addEventListener('click', feedPet);
+  const playButton = document.querySelector('#play');
+  playButton.addEventListener('click', petPlay);
   const clearButton = document.querySelector('#clear');
   clearButton.addEventListener('click', clearStorage);
   const resetButton = document.querySelector('#reset');
   resetButton.addEventListener('click', resetStats);
   const pauseButton = document.querySelector('#pause');
   pauseButton.addEventListener('click', pauseAnimations);
+  const killButton = document.querySelector('#kill');
+  killButton.addEventListener('click', killPet);
+  const petConfirm = document.querySelector('#petConfirm');
+  petConfirm.addEventListener('update', pauseAnimations);
   petSaveCheck();
   meterUpdater();
 }
 
-window.addEventListener('load', init);
+init();
