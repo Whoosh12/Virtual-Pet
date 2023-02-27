@@ -1,14 +1,17 @@
-// add way to replenish energy, change layout, change dirt meter colours,
-// finish dog and rabbit svgs, add animations to rabbit and dog svgs, add pet customization,
+// change layout, change dirt meter colours,
+// finish dog and rabbit svgs, add pet customization,
 // add database to store multiple pets, add way to access these multiple pets
 // add some mingames, duck games esc stats
 // pet will die if a stat is too low/ high for too long (36 hours?)
-// fishing minigame
 // comment code
 // seperate js based on if it affects the client ro is just back end logic
 // create a readme
 // make the svgs a seperate file
 // put pet attributes on server, allow for multiple pets
+// time pet was alive for - important, use date function
+// pet graveyard, record of all pets a player has had
+
+// import pet from './VirtualPet/svr.mjs';
 
 const pet = {
   petName: '',
@@ -19,13 +22,14 @@ const pet = {
   happiness: 66,
   health: 100,
   healthProblems: 0,
+  time: '',
 };
 
 let updateInterval;
 
 
 function createPet() { // create an el to put all query selectors in on load loop over query selector all [id]
-  const nameInput = document.querySelector('.name'); // make name and ID
+  const nameInput = document.querySelector('#name'); // make name and ID
   const petConfirm = document.querySelector('#petConfirm');
   const petSelector = document.querySelector('.select');
   if (nameInput.value === '' && petSelector.value === '') {
@@ -43,6 +47,7 @@ function createPet() { // create an el to put all query selectors in on load loo
     }
     pet.petName = nameInput.value;
     pet.petType = petSelector.value;
+    pet.time = Date();
     localStorage.setItem('Pet', JSON.stringify(pet));
     loadPet();
   }
@@ -51,14 +56,6 @@ function createPet() { // create an el to put all query selectors in on load loo
 function allowedKey(key) {
   let allowed;
   switch (key) {
-    case 'petName':
-      allowed = false;
-      break;
-
-    case 'healthProblems':
-      allowed = false;
-      break;
-
     case 'hunger':
       allowed = true;
       break;
@@ -72,22 +69,22 @@ function allowedKey(key) {
       break;
 
     default:
-      allowed = true;
+      allowed = false;
   }
   return allowed;
 }
 
 function petDeath() {
-  const aliveEyes = document.querySelector('#aliveEyes');
+  const aliveEyes = document.querySelector(`#aliveEyes${pet.petType}`);
   aliveEyes.classList.toggle('hidden');
-  const deadEyes = document.querySelector('#deadEyes');
+  const deadEyes = document.querySelector(`#deadEyes${pet.petType}`);
   deadEyes.classList.toggle('hidden');
   const petConfirm = document.querySelector('#petConfirm');
-  petConfirm.textContent = `Your ${pet.petType}, ${pet.petName}, has died.`;
+  petConfirm.textContent = `Your ${pet.petType}, ${pet.petName}, has died. It survived for ${pet.time - Date()}`;
   pauseAnimations();
 }
 
-function meterCalc() { // nested if, allowed key at top
+function meterCalc() {
   for (const [key, value] of Object.entries(pet)) {
     if (allowedKey(key)) {
       if (value === 0) {
@@ -108,7 +105,6 @@ function meterCalc() { // nested if, allowed key at top
   pet.dirtiness = Math.max(pet.dirtiness -= 1, 0);
   pet.sleep = Math.max(pet.sleep -= 1, 0);
   pet.health = Math.max(pet.health -= pet.healthProblems, 0);
-  // localStorage.setItem('Pet', JSON.stringify(pet)); // make this less regular, every ~5 mins
   meterUpdater();
 }
 
@@ -192,36 +188,10 @@ function resetStats() {
 }
 
 function pauseAnimations() {
-  let count = 0;
-  function checkAnimations() {
-    let animationTarget;
-    switch (pet.petType) {
-      case 'cat':
-        animationTarget = '#catHead';
-        break;
-
-      case 'dog':
-        animationTarget = '#dogTail';
-        break;
-
-      case 'rabbit':
-        if (count === 0) {
-          animationTarget = '#leftEar';
-        } else {
-          animationTarget = '#rightEar';
-        }
-        break;
-    }
-    return animationTarget;
+  const animations = document.querySelectorAll('.animated');
+  for (const animated of animations) {
+    animated.style.animationPlayState = 'paused';
   }
-  for (let i = 0; i < 2; i++) {
-    const animation = document.querySelector(`${checkAnimations()}`);
-    const running = animation.style.animationPlayState === 'running';
-    animation.style.animationPlayState = running ? 'paused' : 'running';
-    console.log(animation);
-    count += 1;
-  }
-  count = 0;
 }
 
 function killPet() {

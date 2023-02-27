@@ -7,7 +7,7 @@
 <body>
   <section id="petCreate">
     <label id="inputLabel">Please input a name for your pet:</label>
-    <input type="text" class="name" />
+    <input type="text" id="name" />
 
     <br />
     <select class="select" id="typeSelect">
@@ -30,7 +30,7 @@
           <use href="#catLegs"></use>
           <use href="#catHead"></use>
         </g>
-        <g id="catHead">
+        <g id="catHead" class="animated">
           <polygon points="75,60 75,30 105,60"></polygon>
           <polygon points="95,60 125,30 125,60"></polygon>
           <circle
@@ -44,11 +44,11 @@
           <path d="M100,80 c0,0 -5,10 -15,5" fill="none" stroke="black"></path>
           <path d="M100,80 c0,0 5,10 15,5" fill="none" stroke="black"></path>
           <polygon points="100,80 95,75 105,75"></polygon>
-          <g id="aliveEyes">
+          <g id="aliveEyescat">
             <circle cx="90" cy="65" r="3"></circle>
             <circle cx="110" cy="65" r="3"></circle>
           </g>
-          <g id="deadEyes" class="hidden">
+          <g id="deadEyescat" class="hidden">
             <polygon points="88,60 96,68 94,70 86,62"></polygon>
             <polygon points="88,70 96,62 94,60 86,68"></polygon>
             <polygon points="108,60 116,68 114,70 106,62"></polygon>
@@ -107,11 +107,11 @@
           <path d="M100,80 l10,10" fill="none" stroke="black"></path>
           <path d="M100,80 l7,7 c0,0 -6.5,10 -14,0 z"></path>
           <polygon points="100,80 95,75 105,75"></polygon>
-          <g id="aliveEyes">
+          <g id="aliveEyesdog">
             <circle cx="90" cy="65" r="3"></circle>
             <circle cx="110" cy="65" r="3"></circle>
           </g>
-          <g id="deadEyes" class="hidden">
+          <g id="deadEyedog" class="hidden">
             <polygon points="88,60 96,68 94,70 86,62"></polygon>
             <polygon points="88,70 96,62 94,60 86,68"></polygon>
             <polygon points="108,60 116,68 114,70 106,62"></polygon>
@@ -120,7 +120,7 @@
           <use href="aliveEyes"></use>
           <use href="deadEyes"></use>
         </g>
-        <g id="dogTail">
+        <g id="dogTail" class="animated">
           <path
             d="M90,155 c0,0 -35,-25 -27,-58 c0,0 16,38 25,42 L90,155 z"
             fill="gold"
@@ -178,11 +178,11 @@
           <path d="M100,80 c0,0 -5,10 -8,0" fill="none" stroke="black"></path>
           <path d="M100,80 c0,0 5,10 8,0" fill="none" stroke="black"></path>
           <polygon points="100,80 95,75 105,75"></polygon>
-          <g id="aliveEyes">
+          <g id="aliveEyesrabbit">
             <circle cx="90" cy="65" r="3"></circle>
             <circle cx="110" cy="65" r="3"></circle>
           </g>
-          <g id="deadEyes" class="hidden">
+          <g id="deadEyesrabbit" class="hidden">
             <polygon points="88,60 96,68 94,70 86,62"></polygon>
             <polygon points="88,70 96,62 94,60 86,68"></polygon>
             <polygon points="108,60 116,68 114,70 106,62"></polygon>
@@ -192,14 +192,14 @@
           <use href="deadEyes"></use>
         </g>
         <g id="rabbitEars">
-          <g id="leftEar">
+          <g id="leftEar" class="animated">
             <path
               d="M80,60 c0,0 -5,-50 5,-55 c0,0 8,5 5,55"
               fill="grey"
               stroke="black"
             ></path>
           </g>
-          <g id="rightEar">
+          <g id="rightEar" class="animated">
             <path
               d="M110,60 c0,0 -5,-50 5,-55 c0,0 8,5 5,55"
               fill="grey"
