@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<title>Virtual Pet</title>
+<link rel="stylesheet" href="style.css" />
+<script defer src="create.mjs"></script>
+<!-- <script type="module" src="../svr.mjs"></script> -->
+<meta name="viewport" content="width=device-width, initial-scale=1 height=device-height, initial-scale=1"/>
+
+<body>
+  <main> 
+    <section id="petCreate">
+      <section class="nameInput">
+        <label id="inputLabel">Please input a name for your pet:</label>
+        <input type="text" id="name"/>
+      </section>
+    
+
+      <section class="typeSelect">
+        <select  id="typeSelect">
+          <option value = ''>Please select a pet type</option>
+          <option value="cat">Cat</option>
+          <option value="dog">Dog</option>
+        <option value="rabbit">Rabbit</option>
+      </select>
+      <a id="submitButton" href="/">
+        <button class="submit" type="button">Submit</button>
+      </a>
+    </section>
+  </section>
+
+  <p id="petConfirm">You have not selected a name or type for your pet</p>
+  
+</body>

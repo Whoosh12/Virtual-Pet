@@ -1,57 +1,6 @@
-// change layout, change dirt meter colours,
-// finish dog and rabbit svgs, add pet customization,
-// add database to store multiple pets, add way to access these multiple pets
-// add some mingames, duck games esc stats
-// pet will die if a stat is too low/ high for too long (36 hours?)
-// comment code
-// seperate js based on if it affects the client ro is just back end logic
-// create a readme
-// make the svgs a seperate file
-// put pet attributes on server, allow for multiple pets
-// time pet was alive for - important, use date function
-// pet graveyard, record of all pets a player has had
-
-// import pet from './VirtualPet/svr.mjs';
-
-const pet = {
-  petName: '',
-  petType: '',
-  hunger: 66,
-  dirtiness: 66,
-  sleep: 66,
-  happiness: 66,
-  health: 100,
-  healthProblems: 0,
-  time: '',
-};
+import { pet } from '../svr.mjs';
 
 let updateInterval;
-
-
-function createPet() { // create an el to put all query selectors in on load loop over query selector all [id]
-  const nameInput = document.querySelector('#name'); // make name and ID
-  const petConfirm = document.querySelector('#petConfirm');
-  const petSelector = document.querySelector('.select');
-  if (nameInput.value === '' && petSelector.value === '') {
-    petConfirm.textContent = 'You have not inputted a name or selected a type!';
-    petConfirm.classList.toggle('warning');
-  } else if (nameInput.value === '') {
-    petConfirm.textContent = 'You have not inputted a name!';
-    petConfirm.classList.toggle('warning');
-  } else if (petSelector.value === '') {
-    petConfirm.textContent = 'You have not selected a type!';
-    petConfirm.classList.toggle('warning');
-  } else {
-    if (petConfirm.classList.contains('warning')) {
-      petConfirm.classList.toggle('warning');
-    }
-    pet.petName = nameInput.value;
-    pet.petType = petSelector.value;
-    pet.time = Date();
-    localStorage.setItem('Pet', JSON.stringify(pet));
-    loadPet();
-  }
-}
 
 function allowedKey(key) {
   let allowed;
@@ -117,12 +66,53 @@ function meterUpdater() { // simplify, get rid of consts
   pet.happiness = (pet.dirtiness + pet.hunger + pet.sleep) / 3;
 }
 
-function loadPet() {
+// function loadPet() {
+//   const petConfirm = document.querySelector('#petConfirm');
+//   petConfirm.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
+
+//   const petHide = document.querySelector('#petStats');
+//   petHide.classList.toggle('hidden');
+
+//   const buttonHide = document.querySelector('#buttons');
+//   buttonHide.classList.toggle('hidden');
+
+//   const clearButton = document.querySelector('#clear');
+//   clearButton.addEventListener('click', clearUpdate);
+
+//   const petSVG = document.querySelector(`#${pet.petType}SVG`);
+//   petSVG.addEventListener('mouseover', cleanPet);
+//   petSVG.classList.toggle('hidden');
+
+//   document.querySelector('#petCreate').style.display = 'none';
+//   localStorage.setItem('Pet', JSON.stringify(pet));
+
+//   updateInterval = setInterval(meterCalc, 1000); // every 504 secs (14 hours)
+
+//   function clearUpdate() {
+//     clearInterval(updateInterval);
+//   }
+
+//   setInterval(savePet, 10000); // every 150 secs
+// }
+
+async function loadPet() {
+  const response = await fetch('pet');
+  const result = await response.json;
+  for (const [key, value] of result) {
+    if (key !== pet.ID && key !== pet.lastUpdate) {
+      pet[key] = result[key];
+    }
+  }
+  updateInterval = setInterval(meterCalc, 1000);
+
+  function clearUpdate() {
+    clearInterval(updateInterval);
+  }
+
+  setInterval(savePet, 10000);
+
   const petConfirm = document.querySelector('#petConfirm');
   petConfirm.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
-
-  const petHide = document.querySelector('#petStats');
-  petHide.classList.toggle('hidden');
 
   const clearButton = document.querySelector('#clear');
   clearButton.addEventListener('click', clearUpdate);
@@ -130,17 +120,7 @@ function loadPet() {
   const petSVG = document.querySelector(`#${pet.petType}SVG`);
   petSVG.addEventListener('mouseover', cleanPet);
   petSVG.classList.toggle('hidden');
-
-  document.querySelector('#petCreate').style.display = 'none';
-  localStorage.setItem('Pet', JSON.stringify(pet));
-
-  updateInterval = setInterval(meterCalc, 1000); // every 504 secs (14 hours)
-
-  function clearUpdate() {
-    clearInterval(updateInterval);
-  }
-
-  setInterval(savePet, 10000); // every 150 secs
+  // loop through each part of the response to set the values for the pets
 }
 
 
@@ -154,20 +134,6 @@ function cleanPet() {
 
 function petPlay() {
   pet.sleep = Math.min(pet.sleep += 25, 100);
-}
-
-function petSaveCheck() {
-  if (localStorage.getItem('Pet')) {
-    const storedPet = JSON.parse(localStorage.getItem('Pet'));
-    // for (const k of Object.keys(pet)) {
-    //   pet.k = storedPet.k;
-    // }
-    for (const [key, value] of Object.entries(pet)) {
-      pet[key] = storedPet[key];
-    }
-
-    loadPet();
-  }
 }
 
 function savePet() {
@@ -199,8 +165,6 @@ function killPet() {
 }
 
 function init() {
-  const nameButton = document.querySelector('.submit');
-  nameButton.addEventListener('click', createPet);
   const feedButton = document.querySelector('#feed');
   feedButton.addEventListener('click', feedPet);
   const playButton = document.querySelector('#play');
@@ -215,8 +179,32 @@ function init() {
   killButton.addEventListener('click', killPet);
   const petConfirm = document.querySelector('#petConfirm');
   petConfirm.addEventListener('update', pauseAnimations);
-  petSaveCheck();
   meterUpdater();
+  loadPet();
 }
 
 init();
+
+// scp pets.sql up2122885@34.78.204.23:~/virtualpet
+// scp petAccess.js up2122885@34.78.204.23:~/virtualpet
+// scp svr.mjs up2122885@34.78.204.23:~/virtualpet
+// scp config.js up2122885@34.78.204.23:~/virtualpet
+// scp package.json up2122885@34.78.204.23:~/virtualpet
+// scp package-lock.json up2122885@34.78.204.23:~/virtualpet
+// scp index.html up2122885@34.78.204.23:~/virtualpet/client
+// scp index.mjs up2122885@34.78.204.23:~/virtualpet/client
+// scp pet.html up2122885@34.78.204.23:~/virtualpet/client
+// scp pet.mjs up2122885@34.78.204.23:~/virtualpet/client
+// scp create.html up2122885@34.78.204.23:~/virtualpet/client
+// scp create.mjs up2122885@34.78.204.23:~/virtualpet/client
+// scp style.css up2122885@34.78.204.23:~/virtualpet/client
+// scp dog.svg up2122885@34.78.204.23:~/virtualpet/client
+
+// mkdir -p home/up2122885/virtualpet/client
+
+// PGUSER=up2122885 \
+// PGHOST=34.78.204.23 \
+// PGPASSWORD=MagicWasowski1 \
+// PGDATABASE=pets \
+// PGPORT=8080 \
+// node svr.mjs

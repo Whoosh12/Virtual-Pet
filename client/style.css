@@ -60,24 +60,25 @@ svg {
     animation-play-state: paused;
 }
 
-#petCreate{
+main {
     font-size: 1.6vw;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr ;
-    grid-template-rows: 1fr 1fr 1fr 1fr ;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas: ". . . ."
                          ". nameInput nameInput ."
-                         
                          ". typeSelect typeSelect ."
-                         ". . . .";
+                         ". petSVG petSVG ."
+                         ". petSVG petSVG ."
+                         ". . . ."
+                         ". buttons buttons ."
+                         ". petStats petStats ."
+                         ". . . ."
+                         ". petConfirm petConfirm .";
                          
-    height: 24vh;
+    height: 50vh;
     width: 100vw;
 }
-
-/* #name {
-    padding: 0px;
-} */
 
 .nameInput {
     display: flex;
@@ -107,6 +108,39 @@ input, select {
     flex-basis: 22.5vw;
 }
 
-/* #typeSelect{
-    margin-left: 75px;
-} */
+
+.petSVG {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    grid-area: petSVG;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    grid-area: buttons;
+}
+
+.petStats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    grid-area: petStats;
+}
+
+.petStats meter, label {
+    flex-basis: 10vw;
+}
+
+#petConfirm {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    grid-area: petConfirm;
+}
