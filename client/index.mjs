@@ -11,34 +11,34 @@
 // time pet was alive for - important, use date function
 // pet graveyard, record of all pets a player has had
 
-function checkPet() {
-  // const response = await fetch('pets');
-  // let pets;
-  // if (response.ok) {
-  //   pets = await response.json;
-  // } else {
-  //   goToCreate();
-  // }
-  // loadPetOptions(pets);
-
-  if (localStorage.getItem('Pet')) {
-    goToPet();
+async function checkPet() {
+  const response = await fetch('pets');
+  let pets;
+  if (response.ok) {
+    pets = await response.json;
   } else {
     goToCreate();
   }
+  loadPetOptions(pets);
+
+  // if (localStorage.getItem('Pet')) {
+  //   goToPet();
+  // } else {
+  //   goToCreate();
+  // }
 }
 
-// function loadPetOptions(pets) {
-//   // const start = document.querySelector('#startPet');
-//   // const options = document.querySelector('#petSelect');
-//   // for (const [ID, name, type] of pets) {
-//   //   const newOpt = document.createElement('option');
-//   //   newOpt.value = ID;
-//   //   newOpt.text = name + ', ' + type;
-//   //   options.add(newOpt, null);
-//   // }
-//   // start.classList.toggle('hidden');
-// }
+function loadPetOptions(pets) {
+  const start = document.querySelector('#startPet');
+  const options = document.querySelector('#petSelect');
+  for (const [ID, name, type] of pets) {
+    const newOpt = document.createElement('option');
+    newOpt.value = ID;
+    newOpt.text = name + ', ' + type;
+    options.add(newOpt, null);
+  }
+  start.classList.toggle('hidden');
+}
 
 function goToCreate() {
   window.location.href = '/create';

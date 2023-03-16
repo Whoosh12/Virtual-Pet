@@ -66,53 +66,15 @@ function meterUpdater() { // simplify, get rid of consts
   pet.happiness = (pet.dirtiness + pet.hunger + pet.sleep) / 3;
 }
 
-function loadPet() {
-  const petConfirm = document.querySelector('#petConfirm');
-  petConfirm.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
-
-  const petHide = document.querySelector('#petStats');
-  petHide.classList.toggle('hidden');
-
-  const buttonHide = document.querySelector('#buttons');
-  buttonHide.classList.toggle('hidden');
-
-  const clearButton = document.querySelector('#clear');
-  clearButton.addEventListener('click', clearUpdate);
-
-  const petSVG = document.querySelector(`#${pet.petType}SVG`);
-  petSVG.addEventListener('mouseover', cleanPet);
-  petSVG.classList.toggle('hidden');
-
-  document.querySelector('#petCreate').style.display = 'none';
-  localStorage.setItem('Pet', JSON.stringify(pet));
-
-  updateInterval = setInterval(meterCalc, 1000); // every 504 secs (14 hours)
-
-  function clearUpdate() {
-    clearInterval(updateInterval);
-  }
-
-  setInterval(savePet, 10000); // every 150 secs
-}
-
-// async function loadPet() {
-//   const response = await fetch('pet');
-//   const result = await response.json;
-//   for (const [key, value] of result) {
-//     if (key !== pet.ID && key !== pet.lastUpdate) {
-//       pet[key] = result[key];
-//     }
-//   }
-//   updateInterval = setInterval(meterCalc, 1000);
-
-//   function clearUpdate() {
-//     clearInterval(updateInterval);
-//   }
-
-//   setInterval(savePet, 10000);
-
+// function loadPet() {
 //   const petConfirm = document.querySelector('#petConfirm');
 //   petConfirm.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
+
+//   const petHide = document.querySelector('#petStats');
+//   petHide.classList.toggle('hidden');
+
+//   const buttonHide = document.querySelector('#buttons');
+//   buttonHide.classList.toggle('hidden');
 
 //   const clearButton = document.querySelector('#clear');
 //   clearButton.addEventListener('click', clearUpdate);
@@ -120,8 +82,46 @@ function loadPet() {
 //   const petSVG = document.querySelector(`#${pet.petType}SVG`);
 //   petSVG.addEventListener('mouseover', cleanPet);
 //   petSVG.classList.toggle('hidden');
-//   // loop through each part of the response to set the values for the pets
+
+//   document.querySelector('#petCreate').style.display = 'none';
+//   localStorage.setItem('Pet', JSON.stringify(pet));
+
+//   updateInterval = setInterval(meterCalc, 1000); // every 504 secs (14 hours)
+
+//   function clearUpdate() {
+//     clearInterval(updateInterval);
+//   }
+
+//   setInterval(savePet, 10000); // every 150 secs
 // }
+
+async function loadPet() {
+  const response = await fetch('pet');
+  const result = await response.json;
+  for (const [key, value] of result) {
+    if (key !== pet.ID && key !== pet.lastUpdate) {
+      pet[key] = result[key];
+    }
+  }
+  updateInterval = setInterval(meterCalc, 1000);
+
+  function clearUpdate() {
+    clearInterval(updateInterval);
+  }
+
+  setInterval(savePet, 10000);
+
+  const petConfirm = document.querySelector('#petConfirm');
+  petConfirm.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
+
+  const clearButton = document.querySelector('#clear');
+  clearButton.addEventListener('click', clearUpdate);
+
+  const petSVG = document.querySelector(`#${pet.petType}SVG`);
+  petSVG.addEventListener('mouseover', cleanPet);
+  petSVG.classList.toggle('hidden');
+  // loop through each part of the response to set the values for the pets
+}
 
 
 function feedPet() {
@@ -138,6 +138,7 @@ function petPlay() {
 
 function savePet() {
   localStorage.setItem('Pet', JSON.stringify(pet));
+  // make function in petaccess to loop through and update values
 }
 
 function clearStorage() {
