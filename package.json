@@ -4,8 +4,9 @@
   "scripts": {
 
     "start": "node svr.mjs",
-    "setuppg": "createdb pets && psql pets < virtualpet/pets.sql",
-    "setup": "npm run setuppg"
+    "setuppg": "createdb pets && psql -d pets -a -f ./pets.sql",
+    "setup": "npm run setuppg",
+    "drop": "dropdb pets"
   },
 
   "dependencies": {
