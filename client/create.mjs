@@ -1,10 +1,8 @@
-import { pet } from '../svr.mjs';
-
-function createPet() { // create an el to put all query selectors in on load loop over query selector all [id]
+async function createPet() { // create an el to put all query selectors in on load loop over query selector all [id]
   const nameInput = document.querySelector('#name'); // make name and ID
   const petConfirm = document.querySelector('#petConfirm');
   const petSelector = document.querySelector('#typeSelect');
-  const submit = document.querySelector('#submitButton');
+  // const submit = document.querySelector('#submitButton');
   if (nameInput.value === '' && petSelector.value === '') {
     petConfirm.textContent = 'You have not inputted a name or selected a type!';
     petConfirm.classList.toggle('warning');
@@ -18,30 +16,32 @@ function createPet() { // create an el to put all query selectors in on load loo
     if (petConfirm.classList.contains('warning')) {
       petConfirm.classList.toggle('warning');
     }
-    pet.petName = nameInput.value;
-    pet.petType = petSelector.value;
-    pet.time = Date();
-    localStorage.setItem('Pet', JSON.stringify(pet));
-    submit.href = '/pet';
-  }
-}
 
-function petSaveCheck() {
-  if (localStorage.getItem('Pet')) {
-    const storedPet = JSON.parse(localStorage.getItem('Pet'));
-    // for (const k of Object.keys(pet)) {
-    //   pet.k = storedPet.k;
-    // }
-    for (const [key, value] of Object.entries(pet)) {
-      pet[key] = storedPet[key];
+    const payload = {
+      petName: nameInput.value,
+      petType: petSelector.value,
+    };
+
+    console.log(payload);
+
+    const response = await fetch('pet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      console.log('saved pet');
+    } else {
+      console.log('failed to save pet', response);
     }
+    // submit.href = '/pet';
   }
 }
 
 function init() {
   const submitButton = document.querySelector('.submit');
   submitButton.addEventListener('click', createPet);
-  petSaveCheck();
 }
 
 init();

@@ -11,41 +11,40 @@
 // time pet was alive for - important, use date function
 // pet graveyard, record of all pets a player has had
 
-async function checkPet() {
-  const response = await fetch('pets');
-  let pets;
-  if (response.ok) {
-    pets = await response.json;
-  } else {
-    goToCreate();
-  }
-  loadPetOptions(pets);
+// async function checkPet() {
+//   const response = await fetch('petStats');
+//   console.log(response);
+//   let pets;
+//   if (response.ok) {
+//     pets = await response.json;
+//     loadPetOptions(pets);
+//   }
 
-  // if (localStorage.getItem('Pet')) {
-  //   goToPet();
-  // } else {
-  //   goToCreate();
-  // }
-}
+//   // if (localStorage.getItem('Pet')) {
+//   //   goToPet();
+//   // } else {
+//   //   goToCreate();
+//   // }
+// }
 
-function loadPetOptions(pets) {
-  const start = document.querySelector('#startPet');
-  const options = document.querySelector('#petSelect');
-  for (const [ID, name, type] of pets) {
-    const newOpt = document.createElement('option');
-    newOpt.value = ID;
-    newOpt.text = name + ', ' + type;
-    options.add(newOpt, null);
-  }
-  start.classList.toggle('hidden');
-}
+// function loadPetOptions(pets) {
+//   const start = document.querySelector('#startPet');
+//   const options = document.querySelector('#petSelect');
+//   for (const [ID, name, type] of pets) {
+//     const newOpt = document.createElement('option');
+//     newOpt.value = ID;
+//     newOpt.text = name + ', ' + type;
+//     options.add(newOpt, null);
+//   }
+//   start.classList.toggle('hidden');
+// }
 
 function goToCreate() {
-  window.location.href = '/create';
+  window.location.href = '8080/create';
 }
 
 function goToPet() {
-  window.location.href = '/pet';
+  window.location.href = '8080/pet';
   // send id to pet.mjs
 }
 
@@ -54,7 +53,7 @@ function init() {
   newPetButton.addEventListener('click', goToCreate);
   const selectPet = document.querySelector('#selectedPet');
   selectPet.addEventListener('click', goToPet);
-  checkPet();
+  // checkPet();
 }
 
 init();

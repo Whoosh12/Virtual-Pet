@@ -2,19 +2,7 @@ import * as db from './petAccess.js';
 import express from 'express';
 
 const app = express();
-app.use(express.static('client'));
-
-export const pet = {
-  petName: '',
-  petType: '',
-  hunger: 66,
-  dirtiness: 66,
-  sleep: 66,
-  happiness: 66,
-  health: 100,
-  healthProblems: 0,
-  lastUpdate: '',
-};
+app.use(express.static('client', { extensions: ['html'] }));
 
 async function getPets(req, res) {
   res.json(await db.findAllPets());
@@ -30,8 +18,9 @@ async function getPet(req, res) {
 }
 
 async function postPet(req, res) {
-  const pets = await db.newPet(req.body.pet);
+  const pets = await db.newPet(req.body);
   res.json(pets);
+  console.log(req.body);
 }
 
 async function putPet(req, res) {
@@ -50,9 +39,9 @@ function asyncWrap(f) {
   };
 }
 
-app.get('/pet', asyncWrap(getPets));
-app.get('/pet/:id', asyncWrap(getPet));
-app.post('/create', express.json(), asyncWrap(postPet));
+app.get('petStats', asyncWrap(getPets));
+app.get('/petStats/:id', asyncWrap(getPet));
+app.post('/pet', express.json(), asyncWrap(postPet));
 app.put('/pet/:id', express.json(), asyncWrap(putPet));
 
 app.listen(8080);
