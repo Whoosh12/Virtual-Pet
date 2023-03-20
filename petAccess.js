@@ -57,7 +57,7 @@ export async function newPet(pet) {
   // const petName = pet.petName;
   // const petType = pet.petType;
   const q = 'INSERT INTO pets (petname, pettype) VALUES ($1, $2)';
-  await sql.query(q, pet.petName, pet.petType);
+  await sql.query(q, [pet.petName, pet.petType]);
 }
 
 // loadStats();

@@ -11,40 +11,45 @@
 // time pet was alive for - important, use date function
 // pet graveyard, record of all pets a player has had
 
-// async function checkPet() {
-//   const response = await fetch('petStats');
-//   console.log(response);
-//   let pets;
-//   if (response.ok) {
-//     pets = await response.json;
-//     loadPetOptions(pets);
-//   }
+const options = document.querySelector('#petSelect');
 
-//   // if (localStorage.getItem('Pet')) {
-//   //   goToPet();
-//   // } else {
-//   //   goToCreate();
-//   // }
-// }
+async function checkPet() {
+  const response = await fetch('pets');
+  let pets;
+  if (response.ok) {
+    pets = await response.json();
+    if (pets.length > 1) {
+      loadPetOptions(pets);
+    }
+  }
 
-// function loadPetOptions(pets) {
-//   const start = document.querySelector('#startPet');
-//   const options = document.querySelector('#petSelect');
-//   for (const [ID, name, type] of pets) {
-//     const newOpt = document.createElement('option');
-//     newOpt.value = ID;
-//     newOpt.text = name + ', ' + type;
-//     options.add(newOpt, null);
-//   }
-//   start.classList.toggle('hidden');
-// }
+  // if (localStorage.getItem('Pet')) {
+  //   goToPet();
+  // } else {
+  //   goToCreate();
+  // }
+}
+
+function loadPetOptions(pets) {
+  const start = document.querySelector('#startPet');
+  for (const pet of pets) {
+    const newOpt = document.createElement('option');
+    newOpt.value = pet.petid;
+    newOpt.text = pet.petname + ', ' + pet.pettype;
+    options.add(newOpt, null);
+  }
+  console.log(pets);
+  start.classList.toggle('hidden');
+}
 
 function goToCreate() {
-  window.location.href = '8080/create';
+  window.location.href = '/create';
 }
 
 function goToPet() {
-  window.location.href = '8080/pet';
+  if (options.checkValididty()) {
+    window.location.href = '/pet';
+  }
   // send id to pet.mjs
 }
 
@@ -53,7 +58,7 @@ function init() {
   newPetButton.addEventListener('click', goToCreate);
   const selectPet = document.querySelector('#selectedPet');
   selectPet.addEventListener('click', goToPet);
-  // checkPet();
+  checkPet();
 }
 
 init();

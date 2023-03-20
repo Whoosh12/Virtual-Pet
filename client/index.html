@@ -7,15 +7,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1 height=device-height, initial-scale=1"/>
 
 <body>
-  <section id="startPet">
-    <select id="petSelect" required="'required">
-      <option value="">Please Select a pet</option>
+  <section id="startPet" class="hidden">
+    <select id="petSelect" required>
+      <option value="" disabled>Please Select a pet</option>
     </select>
-    <button id="selectedPet" type="submit">Select</button>
-
-    <a id="newPet" href="/create">
-      <button id="newPet">Create new pet</button>
+    <a>
+      <button id="selectedPet" type="submit">Select</button>
     </a>
   </section>
+
+  <a id="newPet" href="/create">
+    <button id="newPet">Create new pet</button>
+  </a>
   
 </body>

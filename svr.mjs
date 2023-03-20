@@ -39,9 +39,9 @@ function asyncWrap(f) {
   };
 }
 
-app.get('petStats', asyncWrap(getPets));
-app.get('/petStats/:id', asyncWrap(getPet));
-app.post('/pet', express.json(), asyncWrap(postPet));
-app.put('/pet/:id', express.json(), asyncWrap(putPet));
+app.get('/pets', asyncWrap(getPets));
+app.get('/pets/:id', asyncWrap(getPet));
+app.post('/pets', express.json(), asyncWrap(postPet));
+app.put('/pets/:id', express.json(), asyncWrap(putPet));
 
 app.listen(8080);

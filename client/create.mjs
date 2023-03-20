@@ -2,7 +2,6 @@ async function createPet() { // create an el to put all query selectors in on lo
   const nameInput = document.querySelector('#name'); // make name and ID
   const petConfirm = document.querySelector('#petConfirm');
   const petSelector = document.querySelector('#typeSelect');
-  // const submit = document.querySelector('#submitButton');
   if (nameInput.value === '' && petSelector.value === '') {
     petConfirm.textContent = 'You have not inputted a name or selected a type!';
     petConfirm.classList.toggle('warning');
@@ -35,7 +34,13 @@ async function createPet() { // create an el to put all query selectors in on lo
     } else {
       console.log('failed to save pet', response);
     }
-    // submit.href = '/pet';
+    goToPet();
+  }
+
+  // get most recent pet
+  function goToPet() {
+    window.location.href = '/pet';
+    // send id to pet.mjs
   }
 }
 

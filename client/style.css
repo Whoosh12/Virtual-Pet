@@ -144,3 +144,7 @@ input, select {
     align-content: center;
     grid-area: petConfirm;
 }
+
+select:invalid:required {
+    background-image: linear-gradient(to right, pink, lightgreen);
+  }

@@ -95,9 +95,19 @@ function meterUpdater() { // simplify, get rid of consts
 //   setInterval(savePet, 10000); // every 150 secs
 // }
 
+function getPetId() {
+  return window.location.hash.substring(1);
+}
+
 async function loadPet() {
-  const response = await fetch('pet');
-  const result = await response.json;
+  const id = getPetId;
+  const response = await fetch(`pets/${id}`);
+  let result;
+  if (response.ok) {
+    result = await response.json();
+  } else {
+    console.log('pet not found');
+  }
   for (const [key, value] of result) {
     if (key !== pet.ID && key !== pet.lastUpdate) {
       pet[key] = result[key];
