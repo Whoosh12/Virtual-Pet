@@ -38,7 +38,6 @@ function loadPetOptions(pets) {
     newOpt.text = pet.petname + ', ' + pet.pettype;
     options.add(newOpt, null);
   }
-  console.log(pets);
   start.classList.toggle('hidden');
 }
 
@@ -47,8 +46,8 @@ function goToCreate() {
 }
 
 function goToPet() {
-  if (options.checkValididty()) {
-    window.location.href = '/pet';
+  if (options.checkValidity()) {
+    window.location.href = `/pet#${options.value}`;
   }
   // send id to pet.mjs
 }

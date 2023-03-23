@@ -1,18 +1,6 @@
 import config from './config.js';
 import Postgres from 'pg';
 
-// export const pet = {
-//   petName: '',
-//   petType: '',
-//   hunger: 66,
-//   dirtiness: 66,
-//   sleep: 66,
-//   happiness: 66,
-//   health: 100,
-//   healthProblems: 0,
-//   lastUpdate: '',
-// };
-
 // async function loadStats() {
 //   const response = findPet();
 //   const result = await response.json;
@@ -43,6 +31,12 @@ export async function findAllPets() {
 export async function findPet(id) {
   const q = 'SELECT * FROM pets WHERE petID = $1';
   const result = await sql.query(q, [id]);
+  return result.rows[0];
+}
+
+export async function findNewestPet() {
+  const q = 'SELECT * FROM pets ORDER BY lastupdate  DESC LIMIT 1;';
+  const result = await sql.query(q);
   return result.rows[0];
 }
 

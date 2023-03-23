@@ -23,24 +23,30 @@ async function createPet() { // create an el to put all query selectors in on lo
 
     console.log(payload);
 
-    const response = await fetch('pet', {
+    const response = await fetch('pets', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
 
     if (response.ok) {
-      console.log('saved pet');
+      console.log('created pet');
     } else {
-      console.log('failed to save pet', response);
+      console.log('failed to create pet', response);
     }
     goToPet();
   }
 
   // get most recent pet
-  function goToPet() {
-    window.location.href = '/pet';
+  async function goToPet() {
+    const response = await fetch('new');
+    let newPet;
+    if (response.ok) {
+      newPet = await response.json();
+      console.log(newPet);
+      window.location.href = `/pet#${newPet.petid}`;
     // send id to pet.mjs
+    }
   }
 }
 

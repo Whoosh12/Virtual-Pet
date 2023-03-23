@@ -17,10 +17,13 @@ async function getPet(req, res) {
   }
 }
 
+async function getNewPet(req, res) {
+  res.json(await db.findNewestPet());
+}
+
 async function postPet(req, res) {
   const pets = await db.newPet(req.body);
   res.json(pets);
-  console.log(req.body);
 }
 
 async function putPet(req, res) {
@@ -41,6 +44,7 @@ function asyncWrap(f) {
 
 app.get('/pets', asyncWrap(getPets));
 app.get('/pets/:id', asyncWrap(getPet));
+app.get('/new', asyncWrap(getNewPet));
 app.post('/pets', express.json(), asyncWrap(postPet));
 app.put('/pets/:id', express.json(), asyncWrap(putPet));
 

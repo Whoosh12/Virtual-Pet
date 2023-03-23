@@ -1,4 +1,13 @@
-import { pet } from '../svr.mjs';
+const pet = {
+  petName: '',
+  petType: '',
+  hunger: 66,
+  dirtiness: 66,
+  sleep: 66,
+  happiness: 66,
+  health: 100,
+  healthProblems: 0,
+};
 
 let updateInterval;
 
@@ -28,8 +37,8 @@ function petDeath() {
   aliveEyes.classList.toggle('hidden');
   const deadEyes = document.querySelector(`#deadEyes${pet.petType}`);
   deadEyes.classList.toggle('hidden');
-  const petConfirm = document.querySelector('#petConfirm');
-  petConfirm.textContent = `Your ${pet.petType}, ${pet.petName}, has died. It survived for ${pet.time - Date()}`;
+  const petStatus = document.querySelector('#petStatus');
+  petStatus.textContent = `Your ${pet.petType}, ${pet.petName}, has died. It survived for ${pet.time - Date()}`;
   pauseAnimations();
 }
 
@@ -58,6 +67,7 @@ function meterCalc() {
 }
 
 function meterUpdater() { // simplify, get rid of consts
+  console.log(pet.health);
   document.querySelector('#happiness').value = pet.happiness;
   document.querySelector('#hunger').value = pet.hunger;
   document.querySelector('#energy').value = pet.sleep;
@@ -67,8 +77,8 @@ function meterUpdater() { // simplify, get rid of consts
 }
 
 // function loadPet() {
-//   const petConfirm = document.querySelector('#petConfirm');
-//   petConfirm.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
+//   const petStatus = document.querySelector('#petStatus');
+//   petStatus.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
 
 //   const petHide = document.querySelector('#petStats');
 //   petHide.classList.toggle('hidden');
@@ -100,19 +110,29 @@ function getPetId() {
 }
 
 async function loadPet() {
-  const id = getPetId;
+  const id = getPetId();
   const response = await fetch(`pets/${id}`);
   let result;
   if (response.ok) {
     result = await response.json();
+    console.log(result);
   } else {
     console.log('pet not found');
   }
-  for (const [key, value] of result) {
-    if (key !== pet.ID && key !== pet.lastUpdate) {
-      pet[key] = result[key];
-    }
-  }
+  // for (const [key, value] of result) {
+  //   if (key !== pet.ID && key !== pet.lastUpdate) {
+  //     pet[key] = result[key];
+  //   }
+  // }
+  pet.petName = result.petname;
+  pet.petType = result.pettype;
+  pet.hunger = result.hunger;
+  pet.dirtiness = result.dirtiness;
+  pet.sleep = result.sleep;
+  pet.happiness = result.happiness;
+  pet.health = result.health;
+  pet.healthProblems = result.healthProblems;
+
   updateInterval = setInterval(meterCalc, 1000);
 
   function clearUpdate() {
@@ -121,8 +141,8 @@ async function loadPet() {
 
   setInterval(savePet, 10000);
 
-  const petConfirm = document.querySelector('#petConfirm');
-  petConfirm.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
+  const petStatus = document.querySelector('#petStatus');
+  petStatus.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
 
   const clearButton = document.querySelector('#clear');
   clearButton.addEventListener('click', clearUpdate);
@@ -146,9 +166,21 @@ function petPlay() {
   pet.sleep = Math.min(pet.sleep += 25, 100);
 }
 
-function savePet() {
-  localStorage.setItem('Pet', JSON.stringify(pet));
+async function savePet() {
   // make function in petaccess to loop through and update values
+  const id = getPetId();
+
+  const response = await fetch(`pets/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(pet),
+  });
+
+  if (response.ok) {
+    console.log('saved pet');
+  } else {
+    console.log('failed to save pet', response);
+  }
 }
 
 function clearStorage() {
@@ -188,34 +220,10 @@ function init() {
   pauseButton.addEventListener('click', pauseAnimations);
   const killButton = document.querySelector('#kill');
   killButton.addEventListener('click', killPet);
-  const petConfirm = document.querySelector('#petConfirm');
-  petConfirm.addEventListener('update', pauseAnimations);
+  // const petStatus = document.querySelector('#petStatus');
+  // petStatus.addEventListener('update', pauseAnimations);
   meterUpdater();
   loadPet();
 }
 
 init();
-
-// scp pets.sql up2122885@34.78.204.23:~/virtualpet
-// scp petAccess.js up2122885@34.78.204.23:~/virtualpet
-// scp svr.mjs up2122885@34.78.204.23:~/virtualpet
-// scp config.js up2122885@34.78.204.23:~/virtualpet
-// scp package.json up2122885@34.78.204.23:~/virtualpet
-// scp package-lock.json up2122885@34.78.204.23:~/virtualpet
-// scp index.html up2122885@34.78.204.23:~/virtualpet/client
-// scp index.mjs up2122885@34.78.204.23:~/virtualpet/client
-// scp pet.html up2122885@34.78.204.23:~/virtualpet/client
-// scp pet.mjs up2122885@34.78.204.23:~/virtualpet/client
-// scp create.html up2122885@34.78.204.23:~/virtualpet/client
-// scp create.mjs up2122885@34.78.204.23:~/virtualpet/client
-// scp style.css up2122885@34.78.204.23:~/virtualpet/client
-// scp dog.svg up2122885@34.78.204.23:~/virtualpet/client
-
-// mkdir -p home/up2122885/virtualpet/client
-
-// PGUSER=up2122885 \
-// PGHOST=34.78.204.23 \
-// PGPASSWORD=MagicWasowski1 \
-// PGDATABASE=pets \
-// PGPORT=8080 \
-// node svr.mjs
