@@ -10,5 +10,6 @@ CREATE TABLE IF NOT EXISTS pets (
     happiness int DEFAULT 33,
     health int DEFAULT 100,
     healthProblems int DEFAULT 0,
-    lastUpdate timestamp DEFAULT now()
+    lastUpdate VARCHAR(25),
+    birthDate date DEFAULT CURRENT_DATE
 );

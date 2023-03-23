@@ -18,7 +18,7 @@ async function checkPet() {
   let pets;
   if (response.ok) {
     pets = await response.json();
-    if (pets.length > 1) {
+    if (pets.length >= 1) {
       loadPetOptions(pets);
     }
   }

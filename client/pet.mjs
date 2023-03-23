@@ -7,7 +7,14 @@ const pet = {
   happiness: 66,
   health: 100,
   healthProblems: 0,
+  birthDate: '',
 };
+// put pet object and stat changes on server, no need for last update, change to time created, could do just date?
+// the pet stats would need to be tracked twice, one server side and one client side, keep stats in the database as
+// security against server going down. on loading the pet data is fetched from the database (server-side) client fetches
+// the pet object from the server and starts tracking individually (or fetch everytime its needed) database can be updated
+// less frequently in this case. or have a column in database that records the last update as a varchar so I dont have to
+// deal with the data format nonsense.
 
 let updateInterval;
 
@@ -40,6 +47,8 @@ function petDeath() {
   const petStatus = document.querySelector('#petStatus');
   petStatus.textContent = `Your ${pet.petType}, ${pet.petName}, has died. It survived for ${pet.time - Date()}`;
   pauseAnimations();
+  // psql date format: 2023-03-23
+  // js date format:
 }
 
 function meterCalc() {
@@ -62,12 +71,11 @@ function meterCalc() {
   pet.hunger = Math.max(pet.hunger -= 1, 0);
   pet.dirtiness = Math.max(pet.dirtiness -= 1, 0);
   pet.sleep = Math.max(pet.sleep -= 1, 0);
-  pet.health = Math.max(pet.health -= pet.healthProblems, 0);
+  pet.health = Math.min(Math.max(pet.health -= pet.healthProblems, 0), 100);
   meterUpdater();
 }
 
 function meterUpdater() { // simplify, get rid of consts
-  console.log(pet.health);
   document.querySelector('#happiness').value = pet.happiness;
   document.querySelector('#hunger').value = pet.hunger;
   document.querySelector('#energy').value = pet.sleep;
@@ -115,15 +123,16 @@ async function loadPet() {
   let result;
   if (response.ok) {
     result = await response.json();
-    console.log(result);
+    console.log('Pet found');
   } else {
     console.log('pet not found');
   }
-  // for (const [key, value] of result) {
-  //   if (key !== pet.ID && key !== pet.lastUpdate) {
-  //     pet[key] = result[key];
-  //   }
-  // }
+
+  if (result.lastUpdate !== '') {
+    // compare the 2 dates, find time in between them (in seconds), adjust hunger, sleep, dirtiness and health accordingly
+    // const update = new date;
+  }
+  console.log(result);
   pet.petName = result.petname;
   pet.petType = result.pettype;
   pet.hunger = result.hunger;
@@ -131,7 +140,7 @@ async function loadPet() {
   pet.sleep = result.sleep;
   pet.happiness = result.happiness;
   pet.health = result.health;
-  pet.healthProblems = result.healthProblems;
+  pet.healthProblems = result.healthproblems;
 
   updateInterval = setInterval(meterCalc, 1000);
 
@@ -170,10 +179,23 @@ async function savePet() {
   // make function in petaccess to loop through and update values
   const id = getPetId();
 
+  const payload = {
+    id,
+    hunger: pet.hunger,
+    dirtiness: pet.dirtiness,
+    sleep: pet.sleep,
+    happiness: pet.happiness,
+    health: pet.health,
+    healthProblem: pet.healthProblems,
+    lastUpdate: Date.now(),
+  };
+
+  console.log(payload);
+
   const response = await fetch(`pets/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(pet),
+    body: JSON.stringify(payload),
   });
 
   if (response.ok) {

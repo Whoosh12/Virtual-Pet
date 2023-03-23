@@ -35,15 +35,15 @@ export async function findPet(id) {
 }
 
 export async function findNewestPet() {
-  const q = 'SELECT * FROM pets ORDER BY lastupdate  DESC LIMIT 1;';
+  const q = 'SELECT * FROM pets ORDER BY petID  DESC LIMIT 1;';
   const result = await sql.query(q);
   return result.rows[0];
 }
 
 // updates pet stats
-export async function savePet(pet, dbPet) {
+export async function savePet(pet) {
   const q = 'UPDATE pets SET hunger = $1, dirtiness = $2, sleep = $3, happiness = $4, health = $5, healthProblems = $6, lastUpdate = $7 WHERE petID = $8';
-  await sql.query(q, [pet.hunger, pet.dirtiness, pet.sleep, pet.happiness, pet.health, pet.healthProblems, Date.now(), dbPet.petID]);
+  await sql.query(q, [pet.hunger, pet.dirtiness, pet.sleep, pet.happiness, pet.health, pet.healthProblem, pet.lastUpdate, pet.id]);
 }
 
 // adds new pet
