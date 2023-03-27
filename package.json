@@ -6,7 +6,7 @@
     "start": "node svr.mjs",
     "setuppg": "createdb pets && psql -d pets -a -f ./pets.sql",
     "setup": "npm run setuppg",
-    "drop": "dropdb pets"
+    "restart": "dropdb pets && npm run setuppg"
   },
 
   "dependencies": {

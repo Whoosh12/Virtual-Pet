@@ -2,6 +2,7 @@ async function createPet() { // create an el to put all query selectors in on lo
   const nameInput = document.querySelector('#name'); // make name and ID
   const petConfirm = document.querySelector('#petConfirm');
   const petSelector = document.querySelector('#typeSelect');
+  const date = new Date();
   if (nameInput.value === '' && petSelector.value === '') {
     petConfirm.textContent = 'You have not inputted a name or selected a type!';
     petConfirm.classList.toggle('warning');
@@ -19,6 +20,7 @@ async function createPet() { // create an el to put all query selectors in on lo
     const payload = {
       petName: nameInput.value,
       petType: petSelector.value,
+      birthDate: date,
     };
 
     console.log(payload);

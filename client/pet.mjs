@@ -8,7 +8,19 @@ const pet = {
   health: 100,
   healthProblems: 0,
   birthDate: '',
+  secondsAlive: 0,
 };
+
+const lifeSpan = {
+  year: 0,
+  month: 0,
+  week: 0,
+  day: 0,
+  hour: 0,
+  minute: 0,
+  second: 0,
+};
+
 // put pet object and stat changes on server, no need for last update, change to time created, could do just date?
 // the pet stats would need to be tracked twice, one server side and one client side, keep stats in the database as
 // security against server going down. on loading the pet data is fetched from the database (server-side) client fetches
@@ -39,16 +51,88 @@ function allowedKey(key) {
   return allowed;
 }
 
+
 function petDeath() {
+  // const deathDate = new Date();
+  const lifeSummary = petLifeSpan(pet.secondsAlive);
   const aliveEyes = document.querySelector(`#aliveEyes${pet.petType}`);
   aliveEyes.classList.toggle('hidden');
   const deadEyes = document.querySelector(`#deadEyes${pet.petType}`);
   deadEyes.classList.toggle('hidden');
   const petStatus = document.querySelector('#petStatus');
-  petStatus.textContent = `Your ${pet.petType}, ${pet.petName}, has died. It survived for ${pet.time - Date()}`;
+  petStatus.textContent = lifeSummary;
+  console.log(petStatus);
+  console.log(petStatus.textContent);
   pauseAnimations();
   // psql date format: 2023-03-23
   // js date format:
+
+  function petLifeSpan(secondsAlive) {
+    // const seconds
+
+    console.log(secondsAlive);
+
+    let lifeSummary = `${pet.petName} was alive for `;
+
+    if (secondsAlive >= 31536000) {
+      // do thing
+      // years
+      const seconds = secondsAlive -= 31536000;
+      lifeSpan.year += 1;
+      petLifeSpan(seconds);
+    } else if (secondsAlive < 31536000 && secondsAlive >= 2628000) {
+      // do other thing
+      // months
+      const seconds = secondsAlive -= 2628000;
+      lifeSpan.month += 1;
+      petLifeSpan(seconds);
+    } else if (secondsAlive < 2628000 && secondsAlive >= 604800) {
+      // do other thing again
+      // weeks
+      const seconds = secondsAlive -= 604800;
+      lifeSpan.week += 1;
+      petLifeSpan(seconds);
+    } else if (secondsAlive < 604800 && secondsAlive >= 86400) {
+      // do other thing
+      // days
+      const seconds = secondsAlive -= 86400;
+      lifeSpan.day += 1;
+      petLifeSpan(seconds);
+    } else if (secondsAlive < 86400 && secondsAlive >= 3600) {
+      // do other thing
+      // hours
+      const seconds = secondsAlive -= 3600;
+      lifeSpan.hour += 1;
+      petLifeSpan(seconds);
+    } else if (secondsAlive < 3600 && secondsAlive >= 60) {
+      // do other thing
+      // minutes
+      const seconds = secondsAlive -= 60;
+      lifeSpan.minute += 1;
+      console.log(lifeSpan.minute);
+      petLifeSpan(seconds);
+    } else if (secondsAlive < 60 && secondsAlive > 0) {
+      // do other thing
+      // seconds
+      lifeSpan.second += 1;
+      const seconds = secondsAlive -= 1;
+      console.log(lifeSpan.second);
+      petLifeSpan(seconds);
+    } else if (secondsAlive >= 0) {
+      for (const [key, value] of Object.entries(lifeSpan)) {
+        console.log([key]);
+        console.log([value]);
+        if ([value] >= 1) {
+          lifeSummary = lifeSummary + `${[value]} ${[key]}s, `;
+        }
+        // else if ([value] === 1) {
+        //   lifeSummary = lifeSummary + `${[value]} ${[key]}, `;
+        // }
+      }
+      console.log(lifeSummary);
+      return lifeSummary;
+    }
+  }
 }
 
 function meterCalc() {
@@ -72,6 +156,7 @@ function meterCalc() {
   pet.dirtiness = Math.max(pet.dirtiness -= 1, 0);
   pet.sleep = Math.max(pet.sleep -= 1, 0);
   pet.health = Math.min(Math.max(pet.health -= pet.healthProblems, 0), 100);
+  pet.secondsAlive += 1;
   meterUpdater();
 }
 
@@ -127,28 +212,34 @@ async function loadPet() {
   } else {
     console.log('pet not found');
   }
-
-  if (result.lastUpdate !== '') {
-    // compare the 2 dates, find time in between them (in seconds), adjust hunger, sleep, dirtiness and health accordingly
-    // const update = new date;
-  }
   console.log(result);
+
   pet.petName = result.petname;
   pet.petType = result.pettype;
-  pet.hunger = result.hunger;
-  pet.dirtiness = result.dirtiness;
-  pet.sleep = result.sleep;
   pet.happiness = result.happiness;
-  pet.health = result.health;
   pet.healthProblems = result.healthproblems;
+  pet.birthDate = result.birthdate;
+  pet.secondsAlive = result.secondsalive;
 
+  if (result.lastupdate !== 'A') {
+    const timeDiff = Math.floor((Date.now() - result.lastupdate) / 1000);
+    pet.hunger = result.hunger - timeDiff;
+    pet.dirtiness = result.dirtiness - timeDiff;
+    pet.sleep = result.sleep - timeDiff;
+    pet.health = result.health - timeDiff;
+  } else {
+    pet.hunger = result.hunger;
+    pet.dirtiness = result.dirtiness;
+    pet.sleep = result.sleep;
+    pet.health = result.health;
+  }
   updateInterval = setInterval(meterCalc, 1000);
 
   function clearUpdate() {
     clearInterval(updateInterval);
   }
 
-  setInterval(savePet, 10000);
+  setInterval(savePet, 15000);
 
   const petStatus = document.querySelector('#petStatus');
   petStatus.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
@@ -178,6 +269,7 @@ function petPlay() {
 async function savePet() {
   // make function in petaccess to loop through and update values
   const id = getPetId();
+  console.log(pet);
 
   const payload = {
     id,
@@ -188,9 +280,9 @@ async function savePet() {
     health: pet.health,
     healthProblem: pet.healthProblems,
     lastUpdate: Date.now(),
+    secondsAlive: pet.secondsAlive,
   };
 
-  console.log(payload);
 
   const response = await fetch(`pets/${id}`, {
     method: 'PUT',

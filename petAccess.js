@@ -42,16 +42,16 @@ export async function findNewestPet() {
 
 // updates pet stats
 export async function savePet(pet) {
-  const q = 'UPDATE pets SET hunger = $1, dirtiness = $2, sleep = $3, happiness = $4, health = $5, healthProblems = $6, lastUpdate = $7 WHERE petID = $8';
-  await sql.query(q, [pet.hunger, pet.dirtiness, pet.sleep, pet.happiness, pet.health, pet.healthProblem, pet.lastUpdate, pet.id]);
+  const q = 'UPDATE pets SET hunger = $1, dirtiness = $2, sleep = $3, happiness = $4, health = $5, healthProblems = $6, lastUpdate = $7, secondsAlive = $8 WHERE petID = $9';
+  await sql.query(q, [pet.hunger, pet.dirtiness, pet.sleep, pet.happiness, pet.health, pet.healthProblem, pet.lastUpdate, pet.secondsAlive, pet.id]);
 }
 
 // adds new pet
 export async function newPet(pet) {
   // const petName = pet.petName;
   // const petType = pet.petType;
-  const q = 'INSERT INTO pets (petname, pettype) VALUES ($1, $2)';
-  await sql.query(q, [pet.petName, pet.petType]);
+  const q = 'INSERT INTO pets (petname, pettype, birthdate) VALUES ($1, $2, $3)';
+  await sql.query(q, [pet.petName, pet.petType, pet.birthDate]);
 }
 
 // loadStats();

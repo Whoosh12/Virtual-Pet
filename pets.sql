@@ -7,9 +7,10 @@ CREATE TABLE IF NOT EXISTS pets (
     hunger int DEFAULT 33,
     dirtiness int DEFAULT 33,
     sleep int DEFAULT 33,
-    happiness int DEFAULT 33,
+    happiness decimal DEFAULT 33,
     health int DEFAULT 100,
     healthProblems int DEFAULT 0,
-    lastUpdate VARCHAR(25),
-    birthDate date DEFAULT CURRENT_DATE
+    lastUpdate VARCHAR(25) DEFAULT 'A',
+    birthDate date,
+    secondsAlive int DEFAULT 0
 );
