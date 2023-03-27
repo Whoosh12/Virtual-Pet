@@ -6,11 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1 height=device-height, initial-scale=1"/>
 
 <body>
-
+  <section id="allPet">
     <p id="petStatus">You have not selected a name or type for your pet</p>
 
-    <section class="petSection">
-        <section id="petSVG" class="petSVG">
+      <section id="petSVG" class="petSVG">
           <svg width="200" height="200" id="catSVG" class="hidden">
             <defs>
             <g id="cat">
@@ -223,14 +222,14 @@
             </defs>
             <use href="#rabbit"></use>
           </svg>
-        </section>
+      </section>
     
-        <section id="buttons" class="buttons">
+      <section id="buttons" class="buttons">
           <button id="feed" type="button">Feed!</button>
           <button id="play" type="button">Play!</button>
-        </section>
+      </section>
     
-        <section id="petStats" class="petStats">
+      <section id="petStats" class="petStats">
           <label for="happiness">Happiness</label>
           <meter
             id="happiness"
@@ -281,14 +280,27 @@
             optimum="80"
             value="50"
           ></meter>
-        </section>
-    </main>
+      </section>
       
-      
+    <section id="dropdown">
+      <div>
+        <button class="btn" id="btn">dropdown</button>
+      </div>
+      <div class="hidden" id="options">
+        <button id="kill">Kill pet</button>
+        <button id="reset">Reset</button>
+        <button id="pause">Pause animations</button>
+        <button id="clear">Stop timers</button>
+      </div>
+    </section>
       
     
-      <button type="button" id="clear">Clear</button>
+      <!-- <button type="button" id="clear">Clear</button>
       <button type="button" id="reset">Reset</button>
       <button type="button" id="pause">Pause Animations</button>
-      <button type="button" id="kill">Kill Pet</button>
+      <button type="button" id="kill">Kill Pet</button> -->
+      <a href="/" id="home">
+        <button type="button">Go back</button>
+      </a>
+  </section>
 </body>
