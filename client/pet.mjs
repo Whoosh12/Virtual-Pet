@@ -10,11 +10,6 @@ const pet = {
   birthDate: '',
 };
 // put pet object and stat changes on server, no need for last update, change to time created, could do just date?
-// the pet stats would need to be tracked twice, one server side and one client side, keep stats in the database as
-// security against server going down. on loading the pet data is fetched from the database (server-side) client fetches
-// the pet object from the server and starts tracking individually (or fetch everytime its needed) database can be updated
-// less frequently in this case. or have a column in database that records the last update as a varchar so I dont have to
-// deal with the data format nonsense.
 
 let updateInterval;
 
@@ -176,7 +171,6 @@ function petPlay() {
 }
 
 async function savePet() {
-  // make function in petaccess to loop through and update values
   const id = getPetId();
 
   const payload = {
@@ -205,9 +199,9 @@ async function savePet() {
   }
 }
 
-function clearStorage() {
+function stopTimer() {
   clearInterval(updateInterval);
-  localStorage.clear();
+  showOptions();
 }
 
 function resetStats() {
@@ -216,6 +210,7 @@ function resetStats() {
   pet.sleep = 66;
   pet.health = 100;
   pet.healthProblems = 0;
+  showOptions();
 }
 
 function pauseAnimations() {
@@ -223,10 +218,15 @@ function pauseAnimations() {
   for (const animated of animations) {
     animated.style.animationPlayState = 'paused';
   }
+  showOptions();
 }
 
 function killPet() {
   pet.health = 0;
+}
+
+function showOptions() {
+  document.querySelector('#options').classList.toggle('hidden');
 }
 
 function init() {
@@ -235,7 +235,7 @@ function init() {
   const playButton = document.querySelector('#play');
   playButton.addEventListener('click', petPlay);
   const clearButton = document.querySelector('#clear');
-  clearButton.addEventListener('click', clearStorage);
+  clearButton.addEventListener('click', stopTimer);
   const resetButton = document.querySelector('#reset');
   resetButton.addEventListener('click', resetStats);
   const pauseButton = document.querySelector('#pause');
@@ -244,6 +244,12 @@ function init() {
   killButton.addEventListener('click', killPet);
   // const petStatus = document.querySelector('#petStatus');
   // petStatus.addEventListener('update', pauseAnimations);
+  const dropDownButton = document.querySelector('#btn');
+  dropDownButton.addEventListener('click', showOptions);
+  // const options = document.querySelector('#dropdown');
+  // for (const option of options.children) {
+  //   option.addEventListener('click', showOptions);
+  // }
   meterUpdater();
   loadPet();
 }

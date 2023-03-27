@@ -60,24 +60,66 @@ svg {
     animation-play-state: paused;
 }
 
-main {
+#allIndex {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-areas: ". . ."
+                         ". startPet ."
+                         ". newPet ."
+                         ". . .";
+
+    height: 75vh;
+    width: 100vw;
+}
+
+#allCreate {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-areas: ". . ."
+                         ". nameInput ."
+                         ". typeSelect ."
+                         ". petConfirm ."
+                         ". . .";
+
+    height: 75vh;
+    width: 100vw;
+}
+
+#allPet {
     font-size: 1.6vw;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr ;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-areas: ". . . ."
-                         ". nameInput nameInput ."
-                         ". typeSelect typeSelect ."
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: ". . home dropDown"
                          ". petSVG petSVG ."
                          ". petSVG petSVG ."
                          ". . . ."
                          ". buttons buttons ."
                          ". petStats petStats ."
                          ". . . ."
-                         ". petConfirm petConfirm .";
+                         ". petStatus petStatus .";
                          
-    height: 50vh;
+    height: 100vh;
     width: 100vw;
+}
+
+#startPet {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    grid-area: startPet;
+}
+
+
+#newPet {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    grid-area: newPet;
 }
 
 .nameInput {
@@ -106,6 +148,14 @@ input, select {
 
 .typeSelect select, button {
     flex-basis: 22.5vw;
+}
+
+#petConfirm {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    grid-area: petConfirm;
 }
 
 
@@ -137,14 +187,40 @@ input, select {
     flex-basis: 10vw;
 }
 
-#petConfirm {
+#petStatus {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-content: center;
-    grid-area: petConfirm;
+    grid-area: petStatus;
+}
+
+#home {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    grid-area: home;
 }
 
 select:invalid:required {
     background-image: linear-gradient(to right, pink, lightgreen);
-  }
+}
+
+#dropdown {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    grid-area: dropDown;
+}
+
+.dropdown button {
+    display: flex;
+    align-content: center;
+}
+
+/* .dropdown a:hover {
+    background-color: blue;
+    color: white;
+} */
