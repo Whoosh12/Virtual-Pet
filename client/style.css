@@ -62,46 +62,51 @@ svg {
 
 #allIndex {
     display: grid;
+    align-self: center;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas: ". . ."
                          ". startPet ."
+                         ". text ."
                          ". newPet ."
                          ". . .";
 
-    height: 75vh;
-    width: 100vw;
+    height: 95vh;
+    width: 95vw;
 }
 
 #allCreate {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas: ". . ."
                          ". nameInput ."
                          ". typeSelect ."
+                         ". submit ."
                          ". petConfirm ."
                          ". . .";
 
     height: 75vh;
-    width: 100vw;
+    width: 95vw;
 }
 
 #allPet {
     font-size: 1.6vw;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr ;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-areas: ". . home dropDown"
-                         ". petSVG petSVG ."
-                         ". petSVG petSVG ."
-                         ". . . ."
-                         ". buttons buttons ."
-                         ". petStats petStats ."
-                         ". . . ."
-                         ". petStatus petStatus .";
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: ". . home . dropDown"
+                         ". . . . ."
+                         ". petSVG petSVG petSVG ."
+                         ". petSVG petSVG petSVG ."
+                         ". . . . ."
+                         ". interactButtons interactButtons  interactButtons  ."
+                         ". petStats1 petStats1 petStats1 ."
+                         ". petStats2 petStats2 petStats2 ."
+                         ". . . . ."
+                         ". petStatus petStatus petStatus .";
                          
-    height: 100vh;
+    height: 95vh;
     width: 100vw;
 }
 
@@ -113,6 +118,20 @@ svg {
     grid-area: startPet;
 }
 
+#startPet select, button {
+    flex-basis: 15vw;
+    font-size: 1.2vw;
+}
+
+#tutorialText {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    font-size: 1.2vw;
+    grid-area: text;
+}
+
 
 #newPet {
     display: flex;
@@ -120,6 +139,10 @@ svg {
     justify-content: space-evenly;
     align-content: center;
     grid-area: newPet;
+}
+
+#newPet button {
+    font-size: 1.2vw;
 }
 
 .nameInput {
@@ -131,14 +154,13 @@ svg {
 }
 
 .nameInput label, input{
-    flex-basis: 22.5vw;
+    flex-basis: 17.5vw;
+    font-size: 1.2vw;
 }
 
-input, select {
-    font-size: 1.6vw;
-}
 
-.typeSelect {
+
+#typeSelector {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -146,8 +168,23 @@ input, select {
     grid-area: typeSelect;
 }
 
-.typeSelect select, button {
-    flex-basis: 22.5vw;
+#typeSelector select {
+    flex-basis: 17.5vw;
+    font-size: 1.2vw;
+}
+
+#submitButton {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    grid-area: submit;
+}
+
+#submitButton button {
+    flex-basis: 17.5vw;
+    height: 2vw;
+    font-size: 1.2vw;
 }
 
 #petConfirm {
@@ -155,6 +192,7 @@ input, select {
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-content: center;
+    font-size: 1.2vw;
     grid-area: petConfirm;
 }
 
@@ -167,24 +205,37 @@ input, select {
     grid-area: petSVG;
 }
 
-.buttons {
+#interactButtons {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-content: center;
-    grid-area: buttons;
+    flex-basis: 5vw;
+    grid-area: interactButtons;
 }
 
-.petStats {
+.petStats1 {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     justify-content: space-evenly;
     align-content: center;
-    grid-area: petStats;
+    grid-area: petStats1;
 }
 
-.petStats meter, label {
-    flex-basis: 10vw;
+.petStats2 {
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: center;
+    align-content: center;
+    grid-area: petStats2;
+}
+
+.petStats2 meter, label {
+    margin: 0 1vw;
+}
+
+meter {
+    vertical-align: middle;
 }
 
 #petStatus {
@@ -203,22 +254,44 @@ input, select {
     grid-area: home;
 }
 
+#home button {
+    flex-basis: 10vw;
+}
+
 select:invalid:required {
-    background-image: linear-gradient(to right, pink, lightgreen);
+    background-color: red;
 }
 
 #dropdown {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
     align-content: center;
+    flex-direction: column;
     grid-area: dropDown;
 }
 
 .dropdown button {
     display: flex;
     align-content: center;
+    width: 5vw;
+    flex-basis: 5vw;
 }
+
+#options {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+}
+
+#options button {
+    display: flex;
+    width: 5vw;
+    flex-basis: 1vw;
+    align-content: center;
+}
+
 
 /* .dropdown a:hover {
     background-color: blue;

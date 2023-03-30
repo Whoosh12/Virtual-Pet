@@ -67,10 +67,8 @@
           </defs>
             <use href="#cat"></use>
           </svg>
-    
-          <!-- <img src="./dog.svg" alt="Dog SVG" id="dogSVG" class="hidden"/>  -->
 
-          <svg width="33vw" height="50vh" id="dogSVG" class="hidden">
+          <svg width="200" height="200" id="dogSVG" class="hidden">
             <defs>
               <g id="dog">
                 <use href="#dogTail"></use>
@@ -147,7 +145,7 @@
             <use href="#dog"></use>
           </svg>
     
-          <svg width="33vw" height="50vh" id="rabbitSVG" class="hidden">
+          <svg width="200" height="200" id="rabbitSVG" class="hidden">
             <defs>
               <g id="rabbit">
                 <use href="#rabbitBody"></use>
@@ -224,23 +222,13 @@
           </svg>
       </section>
     
-      <section id="buttons" class="buttons">
+      <section id="interactButtons" class="buttons">
           <button id="feed" type="button">Feed!</button>
           <button id="play" type="button">Play!</button>
       </section>
     
-      <section id="petStats" class="petStats">
-          <label for="happiness">Happiness</label>
-          <meter
-            id="happiness"
-            min="0"
-            max="100"
-            low="33"
-            high="66"
-            optimum="80"
-            value="50"
-          ></meter>
-          <label for="hunger">Hunger</label>
+      <section id="petStats1" class="petStats1">
+        <label for="hunger">Hunger: 
           <meter
             id="hunger"
             min="0"
@@ -250,7 +238,8 @@
             optimum="80"
             value="50"
           ></meter>
-          <label for="energy">Energy</label>
+        </label>
+        <label for="energy">Energy:
           <meter
             id="energy"
             min="0"
@@ -260,7 +249,8 @@
             optimum="80"
             value="50"
           ></meter>
-          <label for="dirtiness">Dirtiness</label>
+        </label>
+        <label for="dirtiness">Dirtiness: 
           <meter
             id="dirtiness"
             min="0"
@@ -270,7 +260,21 @@
             high="66"
             value="50"
           ></meter>
-          <label for="health">Health</label>
+        </label>
+      </section>
+      <section id="petStats2" class="petStats2">
+        <label for="happiness">Happiness:
+          <meter
+            id="happiness"
+            min="0"
+            max="100"
+            low="33"
+            high="66"
+            optimum="80"
+            value="50"
+          ></meter>
+        </label>
+        <label for="health">Health:
           <meter
             id="health"
             min="0"
@@ -280,11 +284,13 @@
             optimum="80"
             value="50"
           ></meter>
+        </label>
       </section>
+          
       
     <section id="dropdown">
       <div>
-        <button class="btn" id="btn">dropdown</button>
+        <button class="btn" id="btn">Dropdown</button>
       </div>
       <div class="hidden" id="options">
         <button id="kill">Kill pet</button>

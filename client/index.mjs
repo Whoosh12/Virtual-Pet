@@ -20,25 +20,20 @@ async function checkPet() {
     pets = await response.json();
     if (pets.length >= 1) {
       loadPetOptions(pets);
+    } else {
+      document.querySelector('#tutorialText').textContent = 'You have no pets. Please create a new one.';
     }
   }
-
-  // if (localStorage.getItem('Pet')) {
-  //   goToPet();
-  // } else {
-  //   goToCreate();
-  // }
 }
 
 function loadPetOptions(pets) {
-  const start = document.querySelector('#startPet');
+  options.removeAll();
   for (const pet of pets) {
     const newOpt = document.createElement('option');
     newOpt.value = pet.petid;
     newOpt.text = pet.petname + ', ' + pet.pettype;
     options.add(newOpt, null);
   }
-  start.classList.toggle('hidden');
 }
 
 function goToCreate() {

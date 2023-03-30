@@ -1,4 +1,4 @@
-<svg width="33vw" height="50vh" id="dogSVG" class="hidden">
+<svg width="33vw" height="50vh" id="dogSVG" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <g id="dog">
           <use href="#dogTail"></use>

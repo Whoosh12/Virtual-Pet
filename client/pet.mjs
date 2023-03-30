@@ -48,84 +48,63 @@ function allowedKey(key) {
 
 
 function petDeath() {
-  // const deathDate = new Date();
-  const lifeSummary = petLifeSpan(pet.secondsAlive);
   const aliveEyes = document.querySelector(`#aliveEyes${pet.petType}`);
   aliveEyes.classList.toggle('hidden');
   const deadEyes = document.querySelector(`#deadEyes${pet.petType}`);
   deadEyes.classList.toggle('hidden');
   const petStatus = document.querySelector('#petStatus');
-  petStatus.textContent = lifeSummary;
-  console.log(petStatus);
-  console.log(petStatus.textContent);
+  clearInterval(updateInterval);
   pauseAnimations();
-  // psql date format: 2023-03-23
-  // js date format:
+  petLifeSpan(pet.secondsAlive);
 
   function petLifeSpan(secondsAlive) {
-    // const seconds
-
-    console.log(secondsAlive);
-
-    let lifeSummary = `${pet.petName} was alive for `;
+    petStatus.textContent = `${pet.petName} was alive for `;
 
     if (secondsAlive >= 31536000) {
-      // do thing
-      // years
       const seconds = secondsAlive -= 31536000;
       lifeSpan.year += 1;
       petLifeSpan(seconds);
     } else if (secondsAlive < 31536000 && secondsAlive >= 2628000) {
-      // do other thing
-      // months
       const seconds = secondsAlive -= 2628000;
       lifeSpan.month += 1;
       petLifeSpan(seconds);
     } else if (secondsAlive < 2628000 && secondsAlive >= 604800) {
-      // do other thing again
-      // weeks
       const seconds = secondsAlive -= 604800;
       lifeSpan.week += 1;
       petLifeSpan(seconds);
     } else if (secondsAlive < 604800 && secondsAlive >= 86400) {
-      // do other thing
-      // days
       const seconds = secondsAlive -= 86400;
       lifeSpan.day += 1;
       petLifeSpan(seconds);
     } else if (secondsAlive < 86400 && secondsAlive >= 3600) {
-      // do other thing
-      // hours
       const seconds = secondsAlive -= 3600;
       lifeSpan.hour += 1;
       petLifeSpan(seconds);
     } else if (secondsAlive < 3600 && secondsAlive >= 60) {
-      // do other thing
-      // minutes
       const seconds = secondsAlive -= 60;
       lifeSpan.minute += 1;
-      console.log(lifeSpan.minute);
       petLifeSpan(seconds);
     } else if (secondsAlive < 60 && secondsAlive > 0) {
-      // do other thing
-      // seconds
       lifeSpan.second += 1;
       const seconds = secondsAlive -= 1;
-      console.log(lifeSpan.second);
       petLifeSpan(seconds);
     } else if (secondsAlive >= 0) {
       for (const [key, value] of Object.entries(lifeSpan)) {
-        console.log([key]);
-        console.log([value]);
-        if ([value] >= 1) {
-          lifeSummary = lifeSummary + `${[value]} ${[key]}s, `;
+        // doesnt work with === only ==
+        if ([key] == 'second') {
+          if ([value] > 1) {
+            petStatus.textContent += `${[value]} ${[key]}s.`;
+          } else if ([value] == 1) {
+            petStatus.textContent += `${[value]} ${[key]}.`;
+          }
+        } else {
+          if ([value] > 1) {
+            petStatus.textContent += `${[value]} ${[key]}s, `;
+          } else if ([value] == 1) {
+            petStatus.textContent += `${[value]} ${[key]}, `;
+          }
         }
-        // else if ([value] === 1) {
-        //   lifeSummary = lifeSummary + `${[value]} ${[key]}, `;
-        // }
       }
-      console.log(lifeSummary);
-      return lifeSummary;
     }
   }
 }
@@ -166,7 +145,7 @@ function meterUpdater() { // simplify, get rid of consts
 
 // function loadPet() {
 //   const petStatus = document.querySelector('#petStatus');
-//   petStatus.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
+//   lifeSummary = `Your ${pet.petType} is called ${pet.petName}.`;
 
 //   const petHide = document.querySelector('#petStats');
 //   petHide.classList.toggle('hidden');
@@ -318,7 +297,14 @@ function killPet() {
 }
 
 function showOptions() {
-  document.querySelector('#options').classList.toggle('hidden');
+  const options = document.querySelector('#options');
+  for (const option of options.children) {
+    if (option.style.display == 'flex') {
+      option.style.display = 'none';
+    } else {
+      option.style.display = 'flex';
+    }
+  }
 }
 
 function init() {
@@ -342,7 +328,7 @@ function init() {
   // for (const option of options.children) {
   //   option.addEventListener('click', showOptions);
   // }
-  meterUpdater();
+  showOptions();
   loadPet();
 }
 
