@@ -3,10 +3,9 @@
 <title>Virtual Pet</title>
 <link rel="stylesheet" href="style.css" />
 <script defer src="pet.mjs" type="module"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1 height=device-height, initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1 height=device-height, initial-scale=1" id="viewport"/>
 
-<body>
-  <section id="allPet">
+<body id="allPet">
     <p id="petStatus">You have not selected a name or type for your pet</p>
 
       <section id="petSVG" class="petSVG">
@@ -288,19 +287,13 @@
       </section>
           
       
-    <section id="dropdown">
-      <div>
+      <section id="dropdown">
         <button class="btn" id="btn">Dropdown</button>
-      </div>
-      <div class="hidden" id="options">
-        <button id="kill">Kill pet</button>
-        <button id="reset">Reset</button>
-        <button id="pause">Pause animations</button>
-        <button id="clear">Stop timers</button>
-      </div>
-    </section>
-      
-    
+        <button id="kill" class="options">Kill pet</button>
+        <button id="reset" class="options">Reset</button>
+        <button id="pause" class="options">Pause animations</button>
+        <button id="clear" class="options">Stop timers</button>
+      </section>
       <!-- <button type="button" id="clear">Clear</button>
       <button type="button" id="reset">Reset</button>
       <button type="button" id="pause">Pause Animations</button>
@@ -308,5 +301,4 @@
       <a href="/" id="home">
         <button type="button">Go back</button>
       </a>
-  </section>
 </body>

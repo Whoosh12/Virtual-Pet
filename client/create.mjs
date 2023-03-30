@@ -53,7 +53,7 @@ async function createPet() { // create an el to put all query selectors in on lo
 }
 
 function init() {
-  const submitButton = document.querySelector('.submit');
+  const submitButton = document.querySelector('#submit');
   submitButton.addEventListener('click', createPet);
 }
 

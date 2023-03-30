@@ -48,8 +48,6 @@ export async function savePet(pet) {
 
 // adds new pet
 export async function newPet(pet) {
-  // const petName = pet.petName;
-  // const petType = pet.petType;
   const q = 'INSERT INTO pets (petname, pettype, birthdate) VALUES ($1, $2, $3)';
   await sql.query(q, [pet.petName, pet.petType, pet.birthDate]);
 }

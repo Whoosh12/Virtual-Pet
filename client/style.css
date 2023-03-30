@@ -60,6 +60,10 @@ svg {
     animation-play-state: paused;
 }
 
+.invisible {
+    visibility: hidden;
+}
+
 #allIndex {
     display: grid;
     align-self: center;
@@ -93,21 +97,23 @@ svg {
 #allPet {
     font-size: 1.6vw;
     display: grid;
+    border: 1px solid black;
+    margin: 0;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas: ". . home . dropDown"
-                         ". . . . ."
+                         ". . . . dropDown"
+                         ". . . . dropDown"
                          ". petSVG petSVG petSVG ."
                          ". petSVG petSVG petSVG ."
                          ". . . . ."
                          ". interactButtons interactButtons  interactButtons  ."
                          ". petStats1 petStats1 petStats1 ."
                          ". petStats2 petStats2 petStats2 ."
-                         ". . . . ."
                          ". petStatus petStatus petStatus .";
                          
-    height: 95vh;
-    width: 100vw;
+    height: 99.5vh;
+    width: 99.85vw;
 }
 
 #startPet {
@@ -158,8 +164,6 @@ svg {
     font-size: 1.2vw;
 }
 
-
-
 #typeSelector {
     display: flex;
     flex-wrap: wrap;
@@ -195,7 +199,6 @@ svg {
     font-size: 1.2vw;
     grid-area: petConfirm;
 }
-
 
 .petSVG {
     display: flex;
@@ -240,7 +243,7 @@ meter {
 
 #petStatus {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     justify-content: space-evenly;
     align-content: center;
     grid-area: petStatus;
@@ -266,33 +269,36 @@ select:invalid:required {
     display: flex;
     flex-wrap: wrap;
     align-content: center;
-    flex-direction: column;
+    justify-content: space-evenly;
     grid-area: dropDown;
 }
 
 .dropdown button {
-    display: flex;
-    align-content: center;
-    width: 5vw;
-    flex-basis: 5vw;
+    flex-basis: 8vw;
 }
 
-#options {
+.options {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     align-content: center;
-    text-align: center;
 }
 
-#options button {
-    display: flex;
-    width: 5vw;
-    flex-basis: 1vw;
+.options button {
     align-content: center;
+    flex-wrap: wrap;
+    flex-basis: 1vw;
 }
 
-
+#placeholder {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    font-size: 1.2vw;
+    color: white;
+    grid-area: placeholder;
+}
 /* .dropdown a:hover {
     background-color: blue;
     color: white;

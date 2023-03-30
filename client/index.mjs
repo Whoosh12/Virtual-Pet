@@ -27,7 +27,7 @@ async function checkPet() {
 }
 
 function loadPetOptions(pets) {
-  options.removeAll();
+  options.remove(0);
   for (const pet of pets) {
     const newOpt = document.createElement('option');
     newOpt.value = pet.petid;

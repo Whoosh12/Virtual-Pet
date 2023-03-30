@@ -21,8 +21,6 @@ const lifeSpan = {
   second: 0,
 };
 
-// put pet object and stat changes on server, no need for last update, change to time created, could do just date?
-
 let updateInterval;
 
 function allowedKey(key) {
@@ -131,6 +129,7 @@ function meterCalc() {
   pet.sleep = Math.max(pet.sleep -= 1, 0);
   pet.health = Math.min(Math.max(pet.health -= pet.healthProblems, 0), 100);
   pet.secondsAlive += 1;
+  console.log(pet.secondsAlive);
   meterUpdater();
 }
 
@@ -142,35 +141,6 @@ function meterUpdater() { // simplify, get rid of consts
   document.querySelector('#health').value = pet.health;
   pet.happiness = (pet.dirtiness + pet.hunger + pet.sleep) / 3;
 }
-
-// function loadPet() {
-//   const petStatus = document.querySelector('#petStatus');
-//   lifeSummary = `Your ${pet.petType} is called ${pet.petName}.`;
-
-//   const petHide = document.querySelector('#petStats');
-//   petHide.classList.toggle('hidden');
-
-//   const buttonHide = document.querySelector('#buttons');
-//   buttonHide.classList.toggle('hidden');
-
-//   const clearButton = document.querySelector('#clear');
-//   clearButton.addEventListener('click', clearUpdate);
-
-//   const petSVG = document.querySelector(`#${pet.petType}SVG`);
-//   petSVG.addEventListener('mouseover', cleanPet);
-//   petSVG.classList.toggle('hidden');
-
-//   document.querySelector('#petCreate').style.display = 'none';
-//   localStorage.setItem('Pet', JSON.stringify(pet));
-
-//   updateInterval = setInterval(meterCalc, 1000); // every 504 secs (14 hours)
-
-//   function clearUpdate() {
-//     clearInterval(updateInterval);
-//   }
-
-//   setInterval(savePet, 10000); // every 150 secs
-// }
 
 function getPetId() {
   return window.location.hash.substring(1);
@@ -186,7 +156,6 @@ async function loadPet() {
   } else {
     console.log('pet not found');
   }
-  console.log(result);
 
   pet.petName = result.petname;
   pet.petType = result.pettype;
@@ -207,13 +176,6 @@ async function loadPet() {
     pet.sleep = result.sleep;
     pet.health = result.health;
   }
-  updateInterval = setInterval(meterCalc, 1000);
-
-  function clearUpdate() {
-    clearInterval(updateInterval);
-  }
-
-  setInterval(savePet, 15000);
 
   const petStatus = document.querySelector('#petStatus');
   petStatus.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
@@ -225,6 +187,14 @@ async function loadPet() {
   petSVG.addEventListener('mouseover', cleanPet);
   petSVG.classList.toggle('hidden');
   // loop through each part of the response to set the values for the pets
+
+  updateInterval = setInterval(meterCalc, 1000);
+
+  function clearUpdate() {
+    clearInterval(updateInterval);
+  }
+
+  setInterval(savePet, 15000);
 }
 
 
@@ -289,21 +259,30 @@ function pauseAnimations() {
   for (const animated of animations) {
     animated.style.animationPlayState = 'paused';
   }
+}
+
+function pauseAnimationsButton() {
+  const animations = document.querySelectorAll('.animated');
+  for (const animated of animations) {
+    animated.style.animationPlayState = 'paused';
+  }
   showOptions();
 }
 
 function killPet() {
   pet.health = 0;
+  showOptions();
 }
 
 function showOptions() {
-  const options = document.querySelector('#options');
-  for (const option of options.children) {
-    if (option.style.display == 'flex') {
-      option.style.display = 'none';
-    } else {
-      option.style.display = 'flex';
-    }
+  const options = document.querySelectorAll('.options');
+  for (const option of options) {
+    // if (option.style.display == 'flex') {
+    //   option.style.display = 'none';
+    // } else {
+    //   option.style.display = 'flex';
+    // }
+    option.classList.toggle('invisible');
   }
 }
 
@@ -317,17 +296,11 @@ function init() {
   const resetButton = document.querySelector('#reset');
   resetButton.addEventListener('click', resetStats);
   const pauseButton = document.querySelector('#pause');
-  pauseButton.addEventListener('click', pauseAnimations);
+  pauseButton.addEventListener('click', pauseAnimationsButton);
   const killButton = document.querySelector('#kill');
   killButton.addEventListener('click', killPet);
-  // const petStatus = document.querySelector('#petStatus');
-  // petStatus.addEventListener('update', pauseAnimations);
   const dropDownButton = document.querySelector('#btn');
   dropDownButton.addEventListener('click', showOptions);
-  // const options = document.querySelector('#dropdown');
-  // for (const option of options.children) {
-  //   option.addEventListener('click', showOptions);
-  // }
   showOptions();
   loadPet();
 }
