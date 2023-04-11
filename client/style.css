@@ -1,10 +1,82 @@
+:root {
+    font-family: sans-serif;
+
+    --rad: 0.5rem;
+
+    --invalid: #F00;
+    --bc: #FFF;
+    --bcinput: #0F0;
+    --bcel: rgb(3, 135, 243);
+    --fc: #000;
+    --svgborder: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bc: #000;
+        --bcinput: rgb(9, 70, 238);
+        --bcel: rgb(16, 45, 124);
+        --bcborder: #FFF;
+        --fc: #FFF;
+        --svgborder: #FFF;
+    }
+}
+
+* {
+    margin: 0;
+}
+
+body {
+    background: var(--bc);
+    color: var(--fc);
+}
+
+body>* {
+    color: var(--fc);
+}
+
+button {
+    border: 0;
+    border-radius: var(--rad);
+}
+
+select {
+    border-color: var(--bcborder);
+}
+
+a {
+    text-decoration: none;
+}
+
 svg {
-    border: dashed red 0.1em;
+    resize: horizontal;
 }
 
 #catHead {
     animation: tiltingHead 10s infinite;
 }
+
+#catHead circle {
+    stroke: var(--svgborder)
+}
+
+#catHead polygon {
+    stroke: var(--svgborder);
+    stroke-width: 2px;
+}
+
+#catBody polygon {
+    stroke: var(--svgborder);
+}
+
+#catEyes {
+    animation: tiltingHead 10s infinite;
+}
+
+#catNose {
+    animation: tiltingHead 10s infinite;
+}
+
 
 @keyframes tiltingHead {
     0% { transform: rotate(0); transform-origin: 100px 75px }
@@ -50,6 +122,43 @@ svg {
     100% { transform: rotate(0);  transform-origin: 115px 60px }
 }
 
+#snakeHead path {
+    fill: green;
+    stroke: var(--svgborder);
+}
+
+#snakeBody path {
+    fill: green;
+    stroke: var(--svgborder);
+}
+
+#snakeTongue path {
+    fill: none;
+    stroke:pink;
+}
+
+#snakeRattle path{
+    fill: rgb(204, 146, 59)
+}
+
+#snakeTail {
+    fill: green;
+    stroke: var(--svgborder);
+    animation: shakingTail 5s infinite;
+}
+
+@keyframes shakingTail {
+    0% { transform: rotate(0); transform-origin: 172px 160px }
+    3% { transform: rotate(-10deg); transform-origin: 172px 160px }
+    6% { transform: rotate(10deg); transform-origin: 172px 160px }
+    9% { transform: rotate(-10deg); transform-origin: 172px 160px }
+    12% { transform: rotate(10deg); transform-origin: 172px 160px }
+    15% { transform: rotate(-10deg); transform-origin: 172px 160px }
+    18% { transform: rotate(10deg); transform-origin: 172px 160px }
+    21% { transform: rotate(0); transform-origin: 172px 160px }
+    100% { transform: rotate(0); transform-origin: 172px 160px }
+}
+
 .warning{
     color: red;
     font-size: large;
@@ -75,29 +184,28 @@ svg {
                          ". newPet ."
                          ". . .";
 
-    height: 95vh;
-    width: 95vw;
+    height: 99.5vh;
+    width: 99.85vw;
 }
 
 #allCreate {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-areas: ". . ."
-                         ". nameInput ."
-                         ". typeSelect ."
-                         ". submit ."
-                         ". petConfirm ."
-                         ". . .";
+    grid-template-areas: ". . . ."
+                         ". nameInput nameInput ."
+                         ". typeSelect typeSelect ."
+                         ". submit submit ."
+                         ". petConfirm petConfirm ."
+                         ". . . .";
 
-    height: 75vh;
-    width: 95vw;
+    height: 99.5vh;
+    width: 99.85vw;
 }
 
 #allPet {
     font-size: 1.6vw;
     display: grid;
-    border: 1px solid black;
     margin: 0;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -125,8 +233,13 @@ svg {
 }
 
 #startPet select, button {
+    color: var(--fc);
     flex-basis: 15vw;
     font-size: 1.2vw;
+}
+
+#startPet button {
+    background: var(--bcel);
 }
 
 #tutorialText {
@@ -148,21 +261,37 @@ svg {
 }
 
 #newPet button {
+    background: var(--bcel);
+    color: var(--fc);
     font-size: 1.2vw;
 }
 
 .nameInput {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    flex-direction: column;
+    justify-content: center;
     align-content: center;
     grid-area: nameInput;
 }
 
 .nameInput label, input{
-    flex-basis: 17.5vw;
+    margin: 0.5vw 0;
+    /* flex-basis: 10vw; */
     font-size: 1.2vw;
 }
+
+#name {
+    background: var(--bcinput);
+    color: var(--fc);
+    outline-color: var(--bcel);
+    border: none;
+    border-radius: var(--rad);
+}
+
+/* #name :focus {
+    outline-color: var(--bcel);
+} */
 
 #typeSelector {
     display: flex;
@@ -175,6 +304,7 @@ svg {
 #typeSelector select {
     flex-basis: 17.5vw;
     font-size: 1.2vw;
+    color: var(--fc);
 }
 
 #submitButton {
@@ -189,6 +319,9 @@ svg {
     flex-basis: 17.5vw;
     height: 2vw;
     font-size: 1.2vw;
+
+    background-color: var(--bcel);
+    color: var(--fc);
 }
 
 #petConfirm {
@@ -215,6 +348,11 @@ svg {
     align-content: center;
     flex-basis: 5vw;
     grid-area: interactButtons;
+}
+
+#interactButtons button {
+    background-color: var(--bcel);
+    color: var(--fc);
 }
 
 .petStats1 {
@@ -259,10 +397,24 @@ meter {
 
 #home button {
     flex-basis: 10vw;
+    background-color: var(--bcel);
+    color: var(--fc);
 }
 
 select:invalid:required {
-    background-color: red;
+    background-color: var(--invalid);
+}
+
+select:valid {
+    background-color: var(--bcel);
+}
+
+option {
+    background-color: var(--bcel);
+}
+
+#invalid {
+    background-color: var(--invalid);
 }
 
 #dropdown {
@@ -273,8 +425,9 @@ select:invalid:required {
     grid-area: dropDown;
 }
 
-.dropdown button {
-    flex-basis: 8vw;
+#dropdown button {
+    background-color: var(--bcel);
+    color: var(--fc);
 }
 
 .options {
@@ -299,7 +452,3 @@ select:invalid:required {
     color: white;
     grid-area: placeholder;
 }
-/* .dropdown a:hover {
-    background-color: blue;
-    color: white;
-} */

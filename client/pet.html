@@ -9,27 +9,19 @@
     <p id="petStatus">You have not selected a name or type for your pet</p>
 
       <section id="petSVG" class="petSVG">
-          <svg width="200" height="200" id="catSVG" class="hidden">
+          <svg width="40%" height="100%" viewBox="0 0 200 200" id="catSVG" class="hidden" preserveAspectRatio="xMidYMid meet">
             <defs>
             <g id="cat">
               <use href="#catBody"></use>
               <use href="#catLegs"></use>
               <use href="#catHead"></use>
+              <use href="#catEyes"></use>
+              <use href="#catNose"></use>
             </g>
-            <g id="catHead" class="animated">
-              <polygon points="75,60 75,30 105,60"></polygon>
-              <polygon points="95,60 125,30 125,60"></polygon>
-              <circle
-                cx="100"
-                cy="75"
-                r="30"
-                stroke="black"
-                stroke-width="3"
-                fill="grey"
-              ></circle>
-              <path d="M100,80 c0,0 -5,10 -15,5" fill="none" stroke="black"></path>
-              <path d="M100,80 c0,0 5,10 15,5" fill="none" stroke="black"></path>
+            <g id="catNose" class="animated">
               <polygon points="100,80 95,75 105,75"></polygon>
+            </g>
+            <g id="catEyes" class="animated">
               <g id="aliveEyescat">
                 <circle cx="90" cy="65" r="3"></circle>
                 <circle cx="110" cy="65" r="3"></circle>
@@ -43,12 +35,26 @@
               <use href="aliveEyes"></use>
               <use href="deadEyes"></use>
             </g>
+            <g id="catHead" class="animated">
+              <polygon points="75,60 75,30 105,60"></polygon>
+              <polygon points="95,60 125,30 125,60"></polygon>
+              <circle
+                cx="100"
+                cy="75"
+                r="30"
+                stroke="black"
+                stroke-width="2px"
+                fill="grey"
+              ></circle>
+              <path d="M100,80 c0,0 -5,10 -15,5" fill="none" stroke="black"></path>
+              <path d="M100,80 c0,0 5,10 15,5" fill="none" stroke="black"></path>
+            </g>
             <g id="catBody">
               <polygon
                 points="85,90 75,160 125,160 115,90"
                 fill="grey"
                 stroke="black"
-                stroke-width="3"
+                stroke-width="2px"
               ></polygon>
             </g>
             <g id="catLegs">
@@ -67,84 +73,50 @@
             <use href="#cat"></use>
           </svg>
 
-          <svg width="200" height="200" id="dogSVG" class="hidden">
+          <svg width="40%" height="100%" viewBox="0 0 200 200" id="snakeSVG" class="hidden" preserveAspectRatio="xMidYMid meet">
             <defs>
-              <g id="dog">
-                <use href="#dogTail"></use>
-                <use href="#dogBody"></use>
-                <use href="#dogLegs"></use>
-                <use href="#dogHead"></use>
-                <use href="#dogTongue"></use>
-              </g>
-              <g id="dogHead">
-                <polygon points="75,60 75,40 90,40 105,60"></polygon>
-                <path d="M75,40 c0,0 0,-20 15,0"></path>
-                <polygon points="95,60 110,40 125,40 125,60"></polygon>
-                <path d="M110,40 c0,0 15,-20 15,0"></path>
-                <circle
-                  cx="100"
-                  cy="75"
-                  r="30"
-                  stroke="black"
-                  stroke-width="3"
-                  fill="gold"
-                ></circle>
-                <path d="M100,80 l-10,10" fill="none" stroke="black"></path>
-                <path d="M100,80 l10,10" fill="none" stroke="black"></path>
-                <path d="M100,80 l7,7 c0,0 -6.5,10 -14,0 z"></path>
-                <polygon points="100,80 95,75 105,75"></polygon>
-                <g id="aliveEyesdog">
-                  <circle cx="90" cy="65" r="3"></circle>
-                  <circle cx="110" cy="65" r="3"></circle>
+            <g id="snake">
+                <use href="#snakeHead"></use>
+                <use href="#snakeTail"></use>
+                <use href="#snakeBody"></use>
+            </g>
+            <g id="snakeBody">
+                <path d="M54,100 l92,0 c0,0 20,15 0,30 l-92,0 c0,0 -20,-15 0,-30"></path>
+                <path d="M46,120 l108,0 c0,0 20,15 0,30 l-108,0 c0,0 -20,-15 0,-30"></path>
+                <path d="M38,140 l124,0 c0,0 20,15 0,30 l-124,0 c0,0 -20,-15 0,-30"></path>
+                <path d="M30,160 l140,0 c0,0 20,15 0,30 l-140,0 c0,0 -20,-15 0,-30"></path>
+            </g>
+            <g id="snakeHead">
+                <path d="M80,100 c0,0 -40,-70 0,-80 l15,15 c0,0 -35,0 20,80"></path>
+                <path d="M78,21 c0,0 15,-15 50,2 c0,0 5,5 0,10 c0,0 -20,8 -35,3"></path>
+                <circle cx="110" cy="20" r="2.5"></circle>
+                <path d="M131,28 c0,0 -15,2 -30,0"></path>
+                <g id="snakeTongue">
+                    <path d="M131,28 c0,0 5,0 7,5 c0,0 0,5 6,6 l3,3 m-3,-3 l3,-3"></path>
                 </g>
-                <g id="deadEyesdog" class="hidden">
-                  <polygon points="88,60 96,68 94,70 86,62"></polygon>
-                  <polygon points="88,70 96,62 94,60 86,68"></polygon>
-                  <polygon points="108,60 116,68 114,70 106,62"></polygon>
-                  <polygon points="108,70 116,62 114,60 106,68"></polygon>
+                <g id="aliveEyessnake">
+                  <circle cx="109.5" cy="20.5" r="2.5"></circle>
+              </g>
+              <g id="deadEyessnake" class="hidden">
+                  <polygon points="108,17 113,22 111,24 106,19"></polygon>
+                  <polygon points="108,24 113,19 111,17 106,22"></polygon>
+              </g>
+            </g>
+            <g id="snakeTail" class="animated">
+                <path d="M170,165 c0,0 10,-10 10,-20 l10,0 c0,0 0,20 -15,30"></path>
+                <g id="snakeRattle" class="animated">
+                    <path d="M178,145 c0,0 -4,-2.5 0,-5 l14,0 c0,0 4,2.5 0,5 l-14,0"></path>
+                    <path d="M179,140 c0,0 -4,-2.5 0,-5 l12,0 c0,0 4,2.5 0,5 l-12,0"></path>
+                    <path d="M180,135 c0,0 -4,-2.5 0,-5 l10,0 c0,0 4,2.5 0,5 l-10,0"></path>
+                    <path d="M181,130 c0,0 -4,-2.5 0,-5 l8,0 c0,0 4,2.5 0,5 l-8,0"></path>
+                    <path d="M182,125 c0,0 -4,-2.5 0,-5 l6,0 c0,0 4,2.5 0,5 l-6,0"></path>
                 </g>
-                <use href="aliveEyes"></use>
-                <use href="deadEyes"></use>
-              </g>
-              <g id="dogTail" class="animated">
-                <path
-                  d="M90,155 c0,0 -35,-25 -27,-58 c0,0 16,38 25,42 L90,155 z"
-                  fill="gold"
-                  stroke="black"
-                ></path>
-              </g>
-              <g id="dogTongue">
-                <path
-                  d="M95,86 l0,10 c0,0 5,5 10,0 l0,-10 c0,0 -5,-3 -10,0"
-                  fill="pink"
-                  stroke="black"
-                ></path>
-              </g>
-              <g id="dogBody">
-                <polygon
-                  points="85,90 75,160 125,160 115,90"
-                  fill="gold"
-                  stroke="black"
-                  stroke-width="3"
-                ></polygon>
-              </g>
-              <g id="dogLegs">
-                <path
-                  d="M85,90 L85,150 C85,150 70,160 85,160 L95,160 95,90 z"
-                  fill="gold"
-                  stroke="black"
-                ></path>
-                <path
-                  d="M115,90 L115,150 C115,150 130,160 115,160 L105,160 105,90 z"
-                  fill="gold"
-                  stroke="black"
-                ></path>
-              </g>
+            </g>
             </defs>
-            <use href="#dog"></use>
+            <use href="#snake"></use>
           </svg>
     
-          <svg width="200" height="200" id="rabbitSVG" class="hidden">
+          <svg width="40%" height="100%" viewBox="0 0 200 200" id="rabbitSVG" class="hidden" preserveAspectRatio="xMidYMid meet">
             <defs>
               <g id="rabbit">
                 <use href="#rabbitBody"></use>
@@ -223,13 +195,14 @@
     
       <section id="interactButtons" class="buttons">
           <button id="feed" type="button">Feed!</button>
-          <button id="play" type="button">Play!</button>
+          <button id="goToSleep" type="button">Sleep!</button>
+          <button id="clean" type="button">Clean</button>
       </section>
     
       <section id="petStats1" class="petStats1">
-        <label for="hunger">Hunger: 
+        <label for="food">Food: 
           <meter
-            id="hunger"
+            id="food"
             min="0"
             max="100"
             low="33"
@@ -238,9 +211,9 @@
             value="50"
           ></meter>
         </label>
-        <label for="energy">Energy:
+        <label for="sleep">Sleep:
           <meter
-            id="energy"
+            id="sleep"
             min="0"
             max="100"
             low="33"
@@ -249,13 +222,13 @@
             value="50"
           ></meter>
         </label>
-        <label for="dirtiness">Dirtiness: 
+        <label for="cleanliness">Cleanliness: 
           <meter
-            id="dirtiness"
+            id="cleanliness"
             min="0"
             max="100"
-            low="80"
-            optimum="33"
+            low="33"
+            optimum="80"
             high="66"
             value="50"
           ></meter>
@@ -294,11 +267,8 @@
         <button id="pause" class="options">Pause animations</button>
         <button id="clear" class="options">Stop timers</button>
       </section>
-      <!-- <button type="button" id="clear">Clear</button>
-      <button type="button" id="reset">Reset</button>
-      <button type="button" id="pause">Pause Animations</button>
-      <button type="button" id="kill">Kill Pet</button> -->
+
       <a href="/" id="home">
-        <button type="button">Go back</button>
+        <button type="button">Home</button>
       </a>
 </body>

@@ -1,8 +1,8 @@
 const pet = {
   petName: '',
   petType: '',
-  hunger: 66,
-  dirtiness: 66,
+  food: 66,
+  cleanliness: 66,
   sleep: 66,
   happiness: 66,
   health: 100,
@@ -22,11 +22,12 @@ const lifeSpan = {
 };
 
 let updateInterval;
+let cleaning = false;
 
 function allowedKey(key) {
   let allowed;
   switch (key) {
-    case 'hunger':
+    case 'food':
       allowed = true;
       break;
 
@@ -34,7 +35,7 @@ function allowedKey(key) {
       allowed = true;
       break;
 
-    case 'dirtiness':
+    case 'cleanliness':
       allowed = true;
       break;
 
@@ -89,16 +90,16 @@ function petDeath() {
     } else if (secondsAlive >= 0) {
       for (const [key, value] of Object.entries(lifeSpan)) {
         // doesnt work with === only ==
-        if ([key] == 'second') {
-          if ([value] > 1) {
+        if (key === 'second') {
+          if (value > 1) {
             petStatus.textContent += `${[value]} ${[key]}s.`;
-          } else if ([value] == 1) {
+          } else if (value === 1) {
             petStatus.textContent += `${[value]} ${[key]}.`;
           }
         } else {
-          if ([value] > 1) {
+          if (value > 1) {
             petStatus.textContent += `${[value]} ${[key]}s, `;
-          } else if ([value] == 1) {
+          } else if (value === 1) {
             petStatus.textContent += `${[value]} ${[key]}, `;
           }
         }
@@ -124,8 +125,8 @@ function meterCalc() {
   if (pet.healthProblems === 0) {
     pet.health += 1;
   }
-  pet.hunger = Math.max(pet.hunger -= 1, 0);
-  pet.dirtiness = Math.max(pet.dirtiness -= 1, 0);
+  pet.food = Math.max(pet.food -= 1, 0);
+  pet.cleanliness = Math.max(pet.cleanliness -= 1, 0);
   pet.sleep = Math.max(pet.sleep -= 1, 0);
   pet.health = Math.min(Math.max(pet.health -= pet.healthProblems, 0), 100);
   pet.secondsAlive += 1;
@@ -135,11 +136,11 @@ function meterCalc() {
 
 function meterUpdater() { // simplify, get rid of consts
   document.querySelector('#happiness').value = pet.happiness;
-  document.querySelector('#hunger').value = pet.hunger;
-  document.querySelector('#energy').value = pet.sleep;
-  document.querySelector('#dirtiness').value = 100 - pet.dirtiness;
+  document.querySelector('#food').value = pet.food;
+  document.querySelector('#sleep').value = pet.sleep;
+  document.querySelector('#cleanliness').value = pet.cleanliness;
   document.querySelector('#health').value = pet.health;
-  pet.happiness = (pet.dirtiness + pet.hunger + pet.sleep) / 3;
+  pet.happiness = (pet.cleanliness + pet.food + pet.sleep) / 3;
 }
 
 function getPetId() {
@@ -166,13 +167,13 @@ async function loadPet() {
 
   if (result.lastupdate !== 'A') {
     const timeDiff = Math.floor((Date.now() - result.lastupdate) / 1000);
-    pet.hunger = result.hunger - timeDiff;
-    pet.dirtiness = result.dirtiness - timeDiff;
+    pet.food = result.food - timeDiff;
+    pet.cleanliness = result.cleanliness - timeDiff;
     pet.sleep = result.sleep - timeDiff;
     pet.health = result.health - timeDiff;
   } else {
-    pet.hunger = result.hunger;
-    pet.dirtiness = result.dirtiness;
+    pet.food = result.food;
+    pet.cleanliness = result.cleanliness;
     pet.sleep = result.sleep;
     pet.health = result.health;
   }
@@ -199,11 +200,20 @@ async function loadPet() {
 
 
 function feedPet() {
-  pet.hunger = Math.min(pet.hunger += 25, 100);
+  pet.food = Math.min(pet.food += 25, 100);
 }
 
 function cleanPet() {
-  pet.dirtiness = Math.min(pet.dirtiness += 2, 100);
+  console.log(cleaning);
+  if (cleaning === true) {
+    pet.cleanliness = Math.min(pet.cleanliness += 2, 100);
+  }
+}
+
+function startClean() {
+  cleaning = true;
+  console.log(cleaning);
+  setTimeout(console.log('Timer done'), 50000);
 }
 
 function petPlay() {
@@ -216,8 +226,8 @@ async function savePet() {
 
   const payload = {
     id,
-    hunger: pet.hunger,
-    dirtiness: pet.dirtiness,
+    food: pet.food,
+    cleanliness: pet.cleanliness,
     sleep: pet.sleep,
     happiness: pet.happiness,
     health: pet.health,
@@ -246,8 +256,8 @@ function stopTimer() {
 }
 
 function resetStats() {
-  pet.hunger = 66;
-  pet.dirtiness = 66;
+  pet.food = 66;
+  pet.cleanliness = 66;
   pet.sleep = 66;
   pet.health = 100;
   pet.healthProblems = 0;
@@ -289,8 +299,10 @@ function showOptions() {
 function init() {
   const feedButton = document.querySelector('#feed');
   feedButton.addEventListener('click', feedPet);
-  const playButton = document.querySelector('#play');
-  playButton.addEventListener('click', petPlay);
+  const sleepButton = document.querySelector('#sleep');
+  sleepButton.addEventListener('click', petPlay);
+  const cleanButton = document.querySelector('#clean');
+  cleanButton.addEventListener('click', startClean);
   const clearButton = document.querySelector('#clear');
   clearButton.addEventListener('click', stopTimer);
   const resetButton = document.querySelector('#reset');

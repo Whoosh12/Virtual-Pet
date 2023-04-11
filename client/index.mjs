@@ -11,6 +11,8 @@
 // time pet was alive for - important, use date function
 // pet graveyard, record of all pets a player has had
 
+// for tutorial check if its the first pet, show what each button does
+
 const options = document.querySelector('#petSelect');
 
 async function checkPet() {
