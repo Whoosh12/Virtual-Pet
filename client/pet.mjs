@@ -22,7 +22,6 @@ const lifeSpan = {
 };
 
 let updateInterval;
-let cleaning = false;
 
 function allowedKey(key) {
   let allowed;
@@ -185,7 +184,6 @@ async function loadPet() {
   clearButton.addEventListener('click', clearUpdate);
 
   const petSVG = document.querySelector(`#${pet.petType}SVG`);
-  petSVG.addEventListener('mouseover', cleanPet);
   petSVG.classList.toggle('hidden');
   // loop through each part of the response to set the values for the pets
 
@@ -204,16 +202,7 @@ function feedPet() {
 }
 
 function cleanPet() {
-  console.log(cleaning);
-  if (cleaning === true) {
-    pet.cleanliness = Math.min(pet.cleanliness += 2, 100);
-  }
-}
-
-function startClean() {
-  cleaning = true;
-  console.log(cleaning);
-  setTimeout(console.log('Timer done'), 50000);
+  pet.cleanliness = Math.min(pet.cleanliness += 25, 100);
 }
 
 function petPlay() {
@@ -299,10 +288,10 @@ function showOptions() {
 function init() {
   const feedButton = document.querySelector('#feed');
   feedButton.addEventListener('click', feedPet);
-  const sleepButton = document.querySelector('#sleep');
+  const sleepButton = document.querySelector('#goToSleep');
   sleepButton.addEventListener('click', petPlay);
   const cleanButton = document.querySelector('#clean');
-  cleanButton.addEventListener('click', startClean);
+  cleanButton.addEventListener('click', cleanPet);
   const clearButton = document.querySelector('#clear');
   clearButton.addEventListener('click', stopTimer);
   const resetButton = document.querySelector('#reset');

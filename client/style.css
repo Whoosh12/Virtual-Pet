@@ -209,7 +209,7 @@ svg {
     margin: 0;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-areas: ". . home . dropDown"
+    grid-template-areas: "help . home . dropDown"
                          ". . . . dropDown"
                          ". . . . dropDown"
                          ". petSVG petSVG petSVG ."
@@ -451,4 +451,17 @@ option {
     font-size: 1.2vw;
     color: white;
     grid-area: placeholder;
+}
+
+#help {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    grid-area: help;
+}
+
+#help button {
+    background-color: var(--bcel);
+    flex-basis: 10vw;
 }
