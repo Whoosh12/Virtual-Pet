@@ -22,6 +22,7 @@ const lifeSpan = {
 };
 
 let updateInterval;
+let bubbleInterval;
 
 function allowedKey(key) {
   let allowed;
@@ -44,6 +45,47 @@ function allowedKey(key) {
   return allowed;
 }
 
+function warningText(key) {
+  let dialogue;
+  switch (key) {
+    case 'food':
+      dialogue = '.hungry';
+      break;
+
+    case 'sleep':
+      dialogue = '.tired';
+      break;
+
+    case 'cleanliness':
+      dialogue = '.dirty';
+      break;
+
+    default:
+      dialogue = false;
+  }
+  return dialogue;
+}
+
+function disasterText(key) {
+  let dialogue;
+  switch (key) {
+    case 'food':
+      dialogue = '.starving';
+      break;
+
+    case 'sleep':
+      dialogue = '.fatigued';
+      break;
+
+    case 'cleanliness':
+      dialogue = '.filthy';
+      break;
+
+    default:
+      dialogue = false;
+  }
+  return dialogue;
+}
 
 function petDeath() {
   const aliveEyes = document.querySelector(`#aliveEyes${pet.petType}`);
@@ -188,12 +230,50 @@ async function loadPet() {
   // loop through each part of the response to set the values for the pets
 
   updateInterval = setInterval(meterCalc, 1000);
+  bubbleInterval = setInterval(showBubble, 10000);
 
   function clearUpdate() {
     clearInterval(updateInterval);
+    clearInterval(bubbleInterval);
   }
 
   setInterval(savePet, 15000);
+}
+
+function showBubble() {
+  const bubble = document.querySelector('.bubble');
+  let lines;
+  for (const [key, value] of Object.entries(pet)) {
+    if (allowedKey(key)) {
+      if (value === 0) {
+        bubble.classList.toggle('hidden');
+        lines = document.querySelectorAll(disasterText(key));
+        for (const line of lines) {
+          line.classList.toggle('hidden');
+        }
+        setTimeout(() => {
+          bubble.classList.toggle('hidden');
+          for (const line of lines) {
+            line.classList.toggle('hidden');
+          }
+        }, 5000);
+        return;
+      } else if (value <= 33) {
+        bubble.classList.toggle('hidden');
+        lines = document.querySelectorAll(warningText(key));
+        for (const line of lines) {
+          line.classList.toggle('hidden');
+        }
+        setTimeout(() => {
+          bubble.classList.toggle('hidden');
+          for (const line of lines) {
+            line.classList.toggle('hidden');
+          }
+        }, 5000);
+        return;
+      }
+    }
+  }
 }
 
 

@@ -464,6 +464,10 @@ option {
     flex-basis: 10vw;
 }
 
+svg text {
+    font-size: 4vw;
+}
+
 @media (max-width: 450px){
     #allIndex {
         display: grid;
@@ -501,9 +505,9 @@ option {
         margin: 0;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-template-areas: "help . home . dropDown"
-                             ". . . . dropDown"
-                             ". petSVG petSVG petSVG dropDown"
+        grid-template-areas: "help help . home home"
+                             "help help . home home"
+                             ". petSVG petSVG petSVG ."
                              ". petSVG petSVG petSVG ."
                              ". petSVG petSVG petSVG ."
                              ". . . . ."
@@ -697,6 +701,8 @@ option {
         justify-content: space-evenly;
         align-content: center;
         grid-area: petStatus;
+        font-size: 4vw;
+        text-align: center;
     }
     
     #home {
@@ -708,7 +714,8 @@ option {
     }
     
     #home button {
-        flex-basis: 10vw;
+        width: 15vw;
+        font-size: 4vw;
         background-color: var(--bcel);
         color: var(--fc);
     }
@@ -730,29 +737,7 @@ option {
     }
     
     #dropdown {
-        display: flex;
-        flex-wrap: wrap;
-        align-content: center;
-        justify-content: space-evenly;
-        grid-area: dropDown;
-    }
-    
-    #dropdown button {
-        background-color: var(--bcel);
-        color: var(--fc);
-    }
-    
-    .options {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        align-content: center;
-    }
-    
-    .options button {
-        align-content: center;
-        flex-wrap: wrap;
-        flex-basis: 1vw;
+        display: none;
     }
     
     #placeholder {
@@ -775,6 +760,8 @@ option {
     
     #help button {
         background-color: var(--bcel);
-        flex-basis: 10vw;
+        font-size: 4vw;
+        color: var(--fc);
+        width: 15vw;
     }
 }

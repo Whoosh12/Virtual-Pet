@@ -5,6 +5,7 @@
                 <use href="#rabbitLegs"></use>
                 <use href="#rabbitEars"></use>
                 <use href="#rabbitHead"></use>
+                <use href="#speechBubble"></use>
               </g>
               <g id="rabbitHead">
                 <circle
