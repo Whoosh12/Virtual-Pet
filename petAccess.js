@@ -1,17 +1,6 @@
 import config from './config.js';
 import Postgres from 'pg';
 
-// async function loadStats() {
-//   const response = findPet();
-//   const result = await response.json;
-//   console.log(result);
-//   // for (const [key, value] of result) {
-//   //   if (key !== pet.ID && key !== pet.lastUpdate) {
-//   //     pet[key] = result[key];
-//   //   }
-//   // }
-// }
-
 const sql = new Postgres.Client(config);
 sql.connect();
 
@@ -51,5 +40,3 @@ export async function newPet(pet) {
   const q = 'INSERT INTO pets (petname, pettype, birthdate) VALUES ($1, $2, $3)';
   await sql.query(q, [pet.petName, pet.petType, pet.birthDate]);
 }
-
-// loadStats();

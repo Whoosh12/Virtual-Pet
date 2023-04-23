@@ -238,6 +238,7 @@ svg {
     
 #startPet select, button {
     font-size: 2vw;
+    color: var(--fc);
 }
     
 #startPet button {
