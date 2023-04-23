@@ -94,6 +94,7 @@ function petDeath() {
   deadEyes.classList.toggle('hidden');
   const petStatus = document.querySelector('#petStatus');
   clearInterval(updateInterval);
+  clearInterval(bubbleInterval);
   pauseAnimations();
   petLifeSpan(pet.secondsAlive);
 

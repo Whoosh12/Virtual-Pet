@@ -20,6 +20,10 @@
         --fc: #FFF;
         --svgborder: #FFF;
     }
+
+    body {
+        background: linear-gradient(180deg, black 70%, rgb(0, 255, 0));
+    }
 }
 
 * {
@@ -27,7 +31,7 @@
 }
 
 body {
-    background: var(--bc);
+    /* background: var(--bc); */
     color: var(--fc);
 }
 
@@ -462,10 +466,23 @@ option {
 #help button {
     background-color: var(--bcel);
     flex-basis: 10vw;
+    color: var(--fc);
 }
 
 svg text {
-    font-size: 4vw;
+    font-size: 1.7vw;
+}
+
+@media (max-width: 950px){
+    svg text {
+        font-size: 2vw;
+    }
+}
+
+@media (max-width: 700px){
+    svg text {
+        font-size: 2.2vw;
+    }
 }
 
 @media (max-width: 450px){
@@ -648,6 +665,10 @@ svg text {
 
     .petSVG svg {
         width: 90%;
+    }
+
+    .speechBubble text {
+        font-size: 4vw;
     }
     
     #interactButtons {
