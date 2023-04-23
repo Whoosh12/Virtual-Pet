@@ -9,6 +9,7 @@
     <p id="petStatus">You have not selected a name or type for your pet</p>
 
       <section id="petSVG" class="petSVG">
+        <!-- SVGs are done inline as I was unable to get the animations to work properly when referencing an external SVG file and using an object element -->
           <svg width="100%" height="100%" viewBox="0 0 200 200" id="catSVG" class="hidden" preserveAspectRatio="xMidYMid meet">
             <defs>
             <g id="cat">
@@ -89,12 +90,13 @@
             <use href="#cat"></use>
           </svg>
 
-          <svg width="40%" height="100%" viewBox="0 0 200 200" id="snakeSVG" class="hidden" preserveAspectRatio="xMidYMid meet">
+          <svg width="100%" height="100%" viewBox="0 0 200 200" id="snakeSVG" class="hidden" preserveAspectRatio="xMidYMid meet">
             <defs>
             <g id="snake">
                 <use href="#snakeHead"></use>
                 <use href="#snakeTail"></use>
                 <use href="#snakeBody"></use>
+                <use href="#speechBubble"></use>
             </g>
             <g id="snakeBody">
                 <path d="M54,100 l92,0 c0,0 20,15 0,30 l-92,0 c0,0 -20,-15 0,-30"></path>
@@ -128,6 +130,21 @@
                     <path d="M182,125 c0,0 -4,-2.5 0,-5 l6,0 c0,0 4,2.5 0,5 l-6,0"></path>
                 </g>
             </g>
+            <g id="speechBubble">
+              <path d="M140,75 L140,30 c0,0 0,-5 5,-5 L205,25 c0,0 5,0 5,5 L210,60 c0,0 0,5 -5,5 L155,65 L140,75" fill="white" stroke="black" class="bubble hidden"></path>
+              <text x="154" y="44" class="starving hidden">Feed</text>
+              <text x="160" y="59" class="starving hidden">Me!</text>
+              <text x="152" y="44" class="filthy hidden">Clean</text>
+              <text x="160" y="59" class="filthy hidden">Me!</text>
+              <text x="153" y="44" class="fatigued hidden">Need</text>
+              <text x="150" y="59" class="fatigued hidden">Sleep!</text>
+              <text x="160" y="44" class="hungry hidden">I'm</text>
+              <text x="147" y="59" class="hungry hidden">Hungry</text>
+              <text x="160" y="44" class="dirty hidden">I'm</text>
+              <text x="155" y="59" class="dirty hidden">Dirty</text>
+              <text x="160" y="44" class="tired hidden">I'm</text>
+              <text x="153" y="59" class="tired hidden">Tired</text>
+            </g>
             </defs>
             <use href="#snake"></use>
           </svg>
@@ -139,6 +156,7 @@
                 <use href="#rabbitLegs"></use>
                 <use href="#rabbitEars"></use>
                 <use href="#rabbitHead"></use>
+                <use href="#speechBubble"></use>
               </g>
               <g id="rabbitHead">
                 <circle
@@ -203,6 +221,21 @@
                   fill="grey"
                   stroke="black"
                 ></path>
+              </g>
+              <g id="speechBubble">
+                <path d="M140,75 L140,30 c0,0 0,-5 5,-5 L205,25 c0,0 5,0 5,5 L210,60 c0,0 0,5 -5,5 L155,65 L140,75" fill="white" stroke="black" class="bubble hidden"></path>
+                <text x="154" y="44" class="starving hidden">Feed</text>
+                <text x="160" y="59" class="starving hidden">Me!</text>
+                <text x="152" y="44" class="filthy hidden">Clean</text>
+                <text x="160" y="59" class="filthy hidden">Me!</text>
+                <text x="153" y="44" class="fatigued hidden">Need</text>
+                <text x="150" y="59" class="fatigued hidden">Sleep!</text>
+                <text x="160" y="44" class="hungry hidden">I'm</text>
+                <text x="147" y="59" class="hungry hidden">Hungry</text>
+                <text x="160" y="44" class="dirty hidden">I'm</text>
+                <text x="155" y="59" class="dirty hidden">Dirty</text>
+                <text x="160" y="44" class="tired hidden">I'm</text>
+                <text x="153" y="59" class="tired hidden">Tired</text>
               </g>
             </defs>
             <use href="#rabbit"></use>

@@ -21,9 +21,11 @@ const lifeSpan = {
   second: 0,
 };
 
+// declared globally as their related intervals are set and cleared in different functions
 let updateInterval;
 let bubbleInterval;
 
+// switch case checks if the key is one of the allowed keys to change the pets health
 function allowedKey(key) {
   let allowed;
   switch (key) {
@@ -45,6 +47,7 @@ function allowedKey(key) {
   return allowed;
 }
 
+// switch case to determine what message will be shown in the speech bubble
 function warningText(key) {
   let dialogue;
   switch (key) {
@@ -66,6 +69,7 @@ function warningText(key) {
   return dialogue;
 }
 
+// switch case to determine what message will be shown in the speech bubble
 function disasterText(key) {
   let dialogue;
   switch (key) {
@@ -87,20 +91,23 @@ function disasterText(key) {
   return dialogue;
 }
 
+
 function petDeath() {
   const aliveEyes = document.querySelector(`#aliveEyes${pet.petType}`);
   aliveEyes.classList.toggle('hidden');
   const deadEyes = document.querySelector(`#deadEyes${pet.petType}`);
   deadEyes.classList.toggle('hidden');
+  // changes the pets eyes to an X
   const petStatus = document.querySelector('#petStatus');
   clearInterval(updateInterval);
   clearInterval(bubbleInterval);
   pauseAnimations();
+  // stops the timers for stats and speech bubbles, also pauses animations for the pets
   petLifeSpan(pet.secondsAlive);
 
+  // recursive function that displays the amount of time the pet was alive for
   function petLifeSpan(secondsAlive) {
     petStatus.textContent = `${pet.petName} was alive for `;
-
     if (secondsAlive >= 31536000) {
       const seconds = secondsAlive -= 31536000;
       lifeSpan.year += 1;
@@ -150,7 +157,9 @@ function petDeath() {
   }
 }
 
+// function that updates the pets stats
 function meterCalc() {
+  // for loop that iterates over each object and checks if its the desired one with the allowedKey switch case function then adjusts the healthProblems attribute if any are 0
   for (const [key, value] of Object.entries(pet)) {
     if (allowedKey(key)) {
       if (value === 0) {
@@ -160,10 +169,12 @@ function meterCalc() {
       }
     }
   }
+  // calls the petDeath function when the pets health reaches 0 (dies)
   if (pet.health === 0) {
     clearInterval(updateInterval);
     petDeath();
   }
+  // the pet gains health if the healthProblems attribute is equal to 0
   if (pet.healthProblems === 0) {
     pet.health += 1;
   }
@@ -172,11 +183,11 @@ function meterCalc() {
   pet.sleep = Math.max(pet.sleep -= 1, 0);
   pet.health = Math.min(Math.max(pet.health -= pet.healthProblems, 0), 100);
   pet.secondsAlive += 1;
-  console.log(pet.secondsAlive);
   meterUpdater();
 }
 
-function meterUpdater() { // simplify, get rid of consts
+// changes the value of the meters
+function meterUpdater() {
   document.querySelector('#happiness').value = pet.happiness;
   document.querySelector('#food').value = pet.food;
   document.querySelector('#sleep').value = pet.sleep;
@@ -190,6 +201,7 @@ function getPetId() {
 }
 
 async function loadPet() {
+  // get request on pets/${id} to get the selected pet from the database
   const id = getPetId();
   const response = await fetch(`pets/${id}`);
   let result;
@@ -200,6 +212,7 @@ async function loadPet() {
     console.log('pet not found');
   }
 
+  // sets the attribute values that dont change over time
   pet.petName = result.petname;
   pet.petType = result.pettype;
   pet.happiness = result.happiness;
@@ -207,6 +220,8 @@ async function loadPet() {
   pet.birthDate = result.birthdate;
   pet.secondsAlive = result.secondsalive;
 
+  // checks if the pet has just been created or not (lastupdate is set to A as default when the pet is created)
+  // if its not new the time between updates is found and the pets stats are changed accordingly
   if (result.lastupdate !== 'A') {
     const timeDiff = Math.floor((Date.now() - result.lastupdate) / 1000);
     pet.food = result.food - timeDiff;
@@ -220,16 +235,18 @@ async function loadPet() {
     pet.health = result.health;
   }
 
+  // displays the pets name
   const petStatus = document.querySelector('#petStatus');
   petStatus.textContent = `Your ${pet.petType} is called ${pet.petName}.`;
 
   const clearButton = document.querySelector('#clear');
   clearButton.addEventListener('click', clearUpdate);
 
+  // displays the correct pet
   const petSVG = document.querySelector(`#${pet.petType}SVG`);
   petSVG.classList.toggle('hidden');
-  // loop through each part of the response to set the values for the pets
 
+  // sets the intervals for each thing that needs them
   updateInterval = setInterval(meterCalc, 1000);
   bubbleInterval = setInterval(showBubble, 10000);
 
@@ -244,6 +261,7 @@ async function loadPet() {
 function showBubble() {
   const bubble = document.querySelector('.bubble');
   let lines;
+  // loops through each attribute and checks if any of the 3 main ones are below 33 or at 0 and shows the appropriate message in the speech bubble
   for (const [key, value] of Object.entries(pet)) {
     if (allowedKey(key)) {
       if (value === 0) {
@@ -290,9 +308,9 @@ function petPlay() {
   pet.sleep = Math.min(pet.sleep += 25, 100);
 }
 
+// saves the pet using a put request to update the database entry
 async function savePet() {
   const id = getPetId();
-  console.log(pet);
 
   const payload = {
     id,
@@ -325,6 +343,7 @@ function stopTimer() {
   showOptions();
 }
 
+// resets the stats of the pet to its defaults
 function resetStats() {
   pet.food = 66;
   pet.cleanliness = 66;
@@ -334,6 +353,7 @@ function resetStats() {
   showOptions();
 }
 
+// pauses the animations of the pet
 function pauseAnimations() {
   const animations = document.querySelectorAll('.animated');
   for (const animated of animations) {
@@ -341,6 +361,7 @@ function pauseAnimations() {
   }
 }
 
+// does the same as the previous function but is repeated to hide all of the dropdown options
 function pauseAnimationsButton() {
   const animations = document.querySelectorAll('.animated');
   for (const animated of animations) {
@@ -357,15 +378,11 @@ function killPet() {
 function showOptions() {
   const options = document.querySelectorAll('.options');
   for (const option of options) {
-    // if (option.style.display == 'flex') {
-    //   option.style.display = 'none';
-    // } else {
-    //   option.style.display = 'flex';
-    // }
     option.classList.toggle('invisible');
   }
 }
 
+// add the event listeners to all elements that need one
 function init() {
   const feedButton = document.querySelector('#feed');
   feedButton.addEventListener('click', feedPet);

@@ -1,8 +1,9 @@
-async function createPet() { // create an el to put all query selectors in on load loop over query selector all [id]
-  const nameInput = document.querySelector('#name'); // make name and ID
+async function createPet() {
+  const nameInput = document.querySelector('#name');
   const petConfirm = document.querySelector('#petConfirm');
   const petSelector = document.querySelector('#typeSelect');
   const date = new Date();
+  // changes the text of petConfirm based on if the user doesnt fill in all the required data
   if (nameInput.value === '' && petSelector.value === '') {
     petConfirm.textContent = 'You have not inputted a name or selected a type!';
     petConfirm.classList.toggle('warning');
@@ -17,13 +18,12 @@ async function createPet() { // create an el to put all query selectors in on lo
       petConfirm.classList.toggle('warning');
     }
 
+    // post request to add the new pet to the database
     const payload = {
       petName: nameInput.value,
       petType: petSelector.value,
       birthDate: date,
     };
-
-    console.log(payload);
 
     const response = await fetch('pets', {
       method: 'POST',
@@ -39,7 +39,7 @@ async function createPet() { // create an el to put all query selectors in on lo
     goToPet();
   }
 
-  // get most recent pet
+  // get request to find the most recent pets ID
   async function goToPet() {
     const response = await fetch('new');
     let newPet;
@@ -47,7 +47,6 @@ async function createPet() { // create an el to put all query selectors in on lo
       newPet = await response.json();
       console.log(newPet);
       window.location.href = `/pet#${newPet.petid}`;
-    // send id to pet.mjs
     }
   }
 }

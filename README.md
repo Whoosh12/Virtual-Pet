@@ -39,4 +39,6 @@ $ npm start
 ```
 
 ## Additional Notes
-The dropdown menu in the pet page would be removed if this were to be released as an actual product, it is kept in for testing purposes. This is why it is excluded when using a screen with a width less than 450px as testing and development will be completed on a desktop meaning it is not required on a mobile device. The timer for the pets stats changing would also be adjusted for release from every 1 second to every 20 seconds while the user is using the application, the offline timer would also be changed so that the stats would go from 100 to 0 after 14 hours.
+The dropdown menu in the pet page would be removed if this were to be released as an actual product, it is kept in for testing purposes. This is why it is excluded when using a screen with a width less than 450px as testing and development will be completed on a desktop meaning it is not required on a mobile device. 
+
+The timer for the pets stats changing would also be adjusted for release from every 1 second to every 20 seconds while the user is using the application, the offline timer would also be changed so that the stats would go from 100 to 0 after 14 hours.

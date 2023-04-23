@@ -471,7 +471,7 @@ option {
 }
 
 svg text {
-    font-size: 1.7vw;
+    font-size: 0.7vw;
 }
 
 @media (max-width: 950px){
