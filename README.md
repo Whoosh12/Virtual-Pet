@@ -5,6 +5,9 @@ A web application created as a piece of coursework for my first year module Appl
 ## Features
 * Pets stored in a database
 * Pet stats will change even while the user isnt using the application
+* Pet stats decrease over time and can be manually increased by the user
+* User can have multiple pets at a time
+* Multiple different options for pets
 
 ## Future Features
 * Tutorial for new users
@@ -31,12 +34,19 @@ A web application created as a piece of coursework for my first year module Appl
 
 
 ## Launch/ Setup
+
 ```
 $ cd ../virtualpet
 $ npm install
 $ npm run setup
 $ npm start
 ```
+
+## Design and implementation rationale
+
+Pets are stored on a database so the user can access them from any device rather than just the one if local storage was used. This will require a form of authentication to be added later so users dont share every pet.
+
+
 
 ## Additional Notes
 The dropdown menu in the pet page would be removed if this were to be released as an actual product, it is kept in for testing purposes. This is why it is excluded when using a screen with a width less than 450px as testing and development will be completed on a desktop meaning it is not required on a mobile device. 

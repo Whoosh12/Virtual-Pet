@@ -24,6 +24,7 @@ const lifeSpan = {
 // declared globally as their related intervals are set and cleared in different functions
 let updateInterval;
 let bubbleInterval;
+let saveInterval;
 
 // switch case checks if the key is one of the allowed keys to change the pets health
 function allowedKey(key) {
@@ -101,7 +102,9 @@ function petDeath() {
   const petStatus = document.querySelector('#petStatus');
   clearInterval(updateInterval);
   clearInterval(bubbleInterval);
+  clearInterval(saveInterval);
   pauseAnimations();
+  savePet();
   // stops the timers for stats and speech bubbles, also pauses animations for the pets
   petLifeSpan(pet.secondsAlive);
 
@@ -249,13 +252,12 @@ async function loadPet() {
   // sets the intervals for each thing that needs them
   updateInterval = setInterval(meterCalc, 1000);
   bubbleInterval = setInterval(showBubble, 10000);
+  saveInterval = setInterval(savePet, 15000);
 
   function clearUpdate() {
     clearInterval(updateInterval);
     clearInterval(bubbleInterval);
   }
-
-  setInterval(savePet, 15000);
 }
 
 function showBubble() {
